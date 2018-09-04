@@ -7,6 +7,7 @@ TagManager:
   - Boundary
   - Bolt
   - Alien
+  - PlasmaExplosion
   layers:
   - Default
   - TransparentFX
