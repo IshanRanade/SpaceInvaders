@@ -12,14 +12,12 @@ public class GameController : MonoBehaviour {
 
         SpawnWave();
 	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
 
     void SpawnWave()
     {
-        Instantiate(alien, new Vector3(0, 0, 10), new Quaternion());
+        for(int i = 0; i < 10; i++)
+        {
+            Instantiate(GameObject.Find("Alien"), new Vector3(Random.value * 20, Random.value * 20, Random.value * 50), new Quaternion());
+        }
     }
 }

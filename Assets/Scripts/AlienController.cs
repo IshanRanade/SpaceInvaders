@@ -4,15 +4,21 @@ using UnityEngine;
 
 public class AlienController : MonoBehaviour {
 
-    public GameObject plasmaExplosion;
+    private GameObject plasmaExplosion;
+
+    void Start()
+    {
+        plasmaExplosion = GameObject.Find("PlasmaExplosionEffect");
+    }
 
     void OnTriggerEnter(Collider collider)
     {
         if (collider.gameObject.tag == "Bolt")
         {
+            GameObject newExplosion = Instantiate(plasmaExplosion, gameObject.transform.position, Quaternion.identity);
+            float time = newExplosion.GetComponent<ParticleSystem>().main.duration;
+            Destroy(newExplosion, time);
             Destroy(gameObject);
-
-            Instantiate(plasmaExplosion, transform.position, Quaternion.identity);
         }
     }
 }
