@@ -8,6 +8,12 @@ TagManager:
   - Bolt
   - Alien
   - PlasmaExplosionEffect
+  - Alien1
+  - Alien2
+  - Alien3
+  - GammaZoid
+  - GammaRidged
+  - GammaBulky
   layers:
   - Default
   - TransparentFX

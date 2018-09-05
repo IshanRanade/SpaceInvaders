@@ -2,10 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AlienController : MonoBehaviour {
+public class GammaBulkyController : MonoBehaviour {
 
     private GameObject plasmaExplosion;
 
+    // Use this for initialization
     void Start()
     {
         plasmaExplosion = GameObject.Find("PlasmaExplosionEffect");

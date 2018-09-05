@@ -20,7 +20,7 @@ public class BoltController : MonoBehaviour {
            Physics.IgnoreCollision(collider.gameObject.GetComponent<Collider>(), GetComponent<Collider>());
         }
 
-        if (collider.gameObject.tag == "Alien")
+        if (collider.gameObject.tag == "GammaZoid")
         {
             Destroy(gameObject);
         }
