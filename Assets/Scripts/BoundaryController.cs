@@ -35,7 +35,7 @@ public class BoundaryController : MonoBehaviour {
 
         if (distance < startFadingDistance || distanceSigned > 0)
         {
-            GetComponent<Renderer>().enabled = true;
+            GetComponent<Renderer>().enabled = false;
             if (distanceSigned > 0)
             {
                 newColor.a = 0.25f;
