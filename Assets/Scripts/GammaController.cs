@@ -81,7 +81,10 @@ public abstract class GammaController : MonoBehaviour {
             }
             else
             {
-                GetComponent<Renderer>().material.SetColor("_Color", flashColor);
+                foreach (Material mat in GetComponent<Renderer>().materials)
+                {
+                    GetComponent<Renderer>().material.SetColor("_Color", flashColor);
+                }
                 Invoke("ResetColor", 0.3f);
             }
         }
@@ -95,6 +98,9 @@ public abstract class GammaController : MonoBehaviour {
 
     void ResetColor()
     {
-        GetComponent<Renderer>().material.SetColor("_Color", originalColor);
+        foreach (Material mat in GetComponent<Renderer>().materials)
+        {
+            GetComponent<Renderer>().material.SetColor("_Color", originalColor);
+        }
     }
 }

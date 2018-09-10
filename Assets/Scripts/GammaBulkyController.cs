@@ -4,11 +4,13 @@ using UnityEngine;
 
 public class GammaBulkyController : GammaController {
 
+    protected float maxUpDown;
+
     public override void SetSpecificValues()
     {
         plasmaExplosion = GameObject.Find("PlasmaExplosionEffect");
         scorePoints = 1;
-        alienBoltSpeed = 50f;
+        alienBoltSpeed = 55f;
         health = 5;
         flashColor = new Color(240.0f / 255.0f, 141.0f / 255.0f, 141.0f / 255.0f);
         nextShotPeriod = 1.0f;
@@ -17,15 +19,16 @@ public class GammaBulkyController : GammaController {
         spinDirection = (Random.value > 0.5f);
         if (spinDirection)
         {
-            rigidbody.velocity = new Vector3(0, 2, 0);
+            rigidbody.velocity = new Vector3(0, 4, 0);
             rigidbody.velocity = Quaternion.Euler(0, 0, Random.value * 360) * rigidbody.velocity;
         }
         else
         {
-            rigidbody.velocity = new Vector3(0, -2, 0);
+            rigidbody.velocity = new Vector3(0, -4, 0);
             rigidbody.velocity = Quaternion.Euler(0, 0, Random.value * 360) * rigidbody.velocity;
-
         }
+        
+        maxUpDown = 10;
     }
 
     void FixedUpdate()

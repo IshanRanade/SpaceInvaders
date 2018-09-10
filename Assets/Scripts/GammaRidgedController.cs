@@ -7,21 +7,21 @@ public class GammaRidgedController : GammaController {
     {
         plasmaExplosion = GameObject.Find("PlasmaExplosionEffect");
         scorePoints = 1;
-        alienBoltSpeed = 40f;
+        alienBoltSpeed = 45f;
         health = 3;
-        flashColor = new Color(240.0f / 255.0f, 141.0f / 255.0f, 141.0f / 255.0f);
+        flashColor = new Color(0.0f / 255.0f, 211.0f / 255.0f, 255.0f / 255.0f);
         nextShotPeriod = 0.75f;
 
         Rigidbody rigidbody = GetComponent<Rigidbody>();
         spinDirection = (Random.value > 0.5f);
         if (spinDirection)
         {
-            rigidbody.velocity = new Vector3(0, 2, 0);
+            rigidbody.velocity = new Vector3(0, 4, 0);
             rigidbody.velocity = Quaternion.Euler(0, 0, Random.value * 360) * rigidbody.velocity;
         }
         else
         {
-            rigidbody.velocity = new Vector3(0, -2, 0);
+            rigidbody.velocity = new Vector3(0, -4, 0);
             rigidbody.velocity = Quaternion.Euler(0, 0, Random.value * 360) * rigidbody.velocity;
 
         }

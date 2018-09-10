@@ -9,7 +9,7 @@ public class GammaZoidController : GammaController {
     {
         plasmaExplosion = GameObject.Find("PlasmaExplosionEffect");
         scorePoints = 1;
-        alienBoltSpeed = 30f;
+        alienBoltSpeed = 35f;
         health = 1;
         flashColor = new Color(240.0f / 255.0f, 141.0f / 255.0f, 141.0f / 255.0f);
         nextShotPeriod = 0.5f;
