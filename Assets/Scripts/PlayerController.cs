@@ -16,7 +16,7 @@ public class PlayerController : MonoBehaviour {
     private GameObject playerHealthText;
 
     private float nextFire;
-    private float health;
+    public float health;
 
     private void Start()
     {
@@ -33,6 +33,12 @@ public class PlayerController : MonoBehaviour {
 
     void Update()
     {
+        if(health <= 0)
+        {
+            Destroy(gameObject);
+            return;
+        }
+
         if(Input.GetKey(KeyCode.Space) && Time.time > nextFire)
         {
             nextFire = Time.time + fireRate;
@@ -133,14 +139,14 @@ public class PlayerController : MonoBehaviour {
 
     }
 
-    void OnCollisionEnter(Collision collision)
+    void OnTriggerEnter(Collider collider)
     {
-        if(collision.gameObject.tag == "Bolt")
+        if (collider.gameObject.tag == "Bolt")
         {
-            Physics.IgnoreCollision(collision.gameObject.GetComponent<Collider>(), GetComponent<Collider>());
+            Physics.IgnoreCollision(collider.gameObject.GetComponent<Collider>(), GetComponent<Collider>());
         }
 
-        if(collision.gameObject.tag == "AlienBolt")
+        if (collider.gameObject.tag == "AlienBolt")
         {
             health--;
         }

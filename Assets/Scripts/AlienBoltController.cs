@@ -5,10 +5,16 @@ using System.Linq;
 
 public class AlienBoltController : MonoBehaviour {
 
-	// Use this for initialization
-	void Start () {
+    // Update is called once per frame
+    void Update()
+    {
         // Delete the bolt when it goes too far
-        if (GetComponent<Rigidbody>().position.z < -0.5 * GameObject.Find("Boundary").transform.localScale.z * 8)
+        if (GetComponent<Rigidbody>().position.z < 0 && GetComponent<Rigidbody>().position.z > -5)
+        {
+            Destroy(gameObject);
+        }
+
+        if(GetComponent<Rigidbody>().position.z < -40)
         {
             Destroy(gameObject);
         }

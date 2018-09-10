@@ -6,17 +6,24 @@ using System.Linq;
 public class BoundaryController : MonoBehaviour {
 
     private GameObject player;
+    private GameController gameController;
 
 	// Use this for initialization
 	void Start () {
         Mesh mesh = GetComponent<MeshFilter>().mesh;
         mesh.triangles = mesh.triangles.Reverse().ToArray();
+        gameController = GameObject.Find("GameController").GetComponent<GameController>();
 
         player = GameObject.Find("Player");
     }
 
     void Update()
     {
+        if (gameController.gameIsOver)
+        {
+            return;
+        }
+
         float radius = transform.localScale.x / 2.0f;
         float distanceSigned = Mathf.Sqrt(Mathf.Pow(player.transform.position.x, 2.0f) + Mathf.Pow(player.transform.position.y, 2.0f)) - radius;
         float distance = Mathf.Abs(distanceSigned);
@@ -36,7 +43,8 @@ public class BoundaryController : MonoBehaviour {
             {
                 newColor.a = 0.25f - distance / startFadingDistance;
             }
-        } else
+        }
+        else
         {
             newColor.a = 0.0f;
         }
