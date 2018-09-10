@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using System.Linq;
 
 public class GameController : MonoBehaviour {
 
@@ -25,6 +26,7 @@ public class GameController : MonoBehaviour {
     private float score;
 
     public bool gameIsOver;
+    public bool resetting;
     bool spawningWave;
 
     // Use this for initialization
@@ -45,10 +47,10 @@ public class GameController : MonoBehaviour {
         gameIsOver = false;
         currentWave = 1;
         spawningWave = false;
+        resetting = false;
 
         waveText.SetActive(false);
-
-        PlayGame();
+        
     }
 
     void SpawnWave()
@@ -56,12 +58,24 @@ public class GameController : MonoBehaviour {
         waveText.SetActive(false);
         float radius = boundary.transform.localScale.x / 2;
         float alienRadius = radius - 3;
-        for(int i = 0; i < 1; i++)
+
+        float range = farthestDistance - closestDistance;
+
+        for (int i = 0; i < 3 + currentWave * 2; i++)
         {
-            float range = farthestDistance - closestDistance;
-            Instantiate(alien1, new Vector3(Random.value * alienRadius, Random.value * alienRadius, Random.value * range + closestDistance), new Quaternion());
-            //Instantiate(alien2, new Vector3(Random.value * alienRadius, Random.value * alienRadius, Random.value * range + closestDistance), new Quaternion());
-            //Instantiate(alien3, new Vector3(Random.value * alienRadius, Random.value * alienRadius, Random.value * range + closestDistance), new Quaternion());
+            Instantiate(alien1, new Vector3((Random.value * 2 + -1) * alienRadius, (Random.value * 2 + -1) * alienRadius, Random.value * range + closestDistance), new Quaternion());
+            currentNumAliens++;
+        }
+
+        for (int i = 0; i < currentWave * 2; i++)
+        {
+            Instantiate(alien2, new Vector3((Random.value * 2 + -1) * alienRadius, (Random.value * 2 + -1) * alienRadius, Random.value * range + closestDistance), new Quaternion());
+            currentNumAliens++;
+        }
+
+        for (int i = 0; i < currentWave - 1; i++)
+        {
+            Instantiate(alien3, new Vector3((Random.value * 2 + -1) * alienRadius, (Random.value * 2 + -1) * alienRadius, Random.value * range + closestDistance), new Quaternion());
             currentNumAliens++;
         }
 
@@ -76,8 +90,14 @@ public class GameController : MonoBehaviour {
 
     void Update()
     {
+        if(resetting)
+        {
+            return;
+        }
+
         if(gameIsOver)
         {
+            ResetGame();
             return;
         }
 
@@ -100,11 +120,50 @@ public class GameController : MonoBehaviour {
 
     void ResetGame()
     {
+        if (Input.GetKey(KeyCode.Escape))
+        {
+            resetting = true;
 
-    }
+            foreach (GameObject o in GameObject.FindGameObjectsWithTag("GammaZoid"))
+            {
+                if (o.name.Contains("Clone"))
+                {
+                    Destroy(o);
+                }
+            }
 
-    void PlayGame()
-    {
+            foreach (GameObject o in GameObject.FindGameObjectsWithTag("GammaRidged"))
+            {
+                if (o.name.Contains("Clone"))
+                {
+                    Destroy(o);
+                }
+            }
 
+            foreach (GameObject o in GameObject.FindGameObjectsWithTag("GammaBulky"))
+            {
+                if (o.name.Contains("Clone"))
+                {
+                    Destroy(o);
+                }
+            }
+
+            foreach (GameObject o in GameObject.FindGameObjectsWithTag("AlienBolt"))
+            {
+                if (o.name.Contains("Clone"))
+                {
+                    Destroy(o);
+                }
+            }
+
+            player.GetComponent<PlayerController>().Reset();
+
+            currentNumAliens = 0;
+            currentWave = 1;
+            gameIsOver = false;
+            spawningWave = false;
+            score = 0;
+            resetting = false;
+        }
     }
 }

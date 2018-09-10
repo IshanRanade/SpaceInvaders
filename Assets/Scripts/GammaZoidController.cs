@@ -9,11 +9,10 @@ public class GammaZoidController : GammaController {
     {
         plasmaExplosion = GameObject.Find("PlasmaExplosionEffect");
         scorePoints = 1;
-        alienBoltSpeed = 15f;
+        alienBoltSpeed = 30f;
         health = 1;
         flashColor = new Color(240.0f / 255.0f, 141.0f / 255.0f, 141.0f / 255.0f);
-        nextShotTime = createdTime;
-        nextShotPeriod = 1.5f;
+        nextShotPeriod = 0.5f;
 
         Rigidbody rigidbody = GetComponent<Rigidbody>();
         spinDirection = (Random.value > 0.5f);

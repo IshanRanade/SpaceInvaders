@@ -2,45 +2,53 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GammaBulkyController : MonoBehaviour {
+public class GammaBulkyController : GammaController {
 
-    private GameObject plasmaExplosion;
-    private int health;
-    private Color flashColor;
-    private Color originalColor;
-
-    // Use this for initialization
-    void Start()
+    public override void SetSpecificValues()
     {
         plasmaExplosion = GameObject.Find("PlasmaExplosionEffect");
+        scorePoints = 1;
+        alienBoltSpeed = 50f;
         health = 5;
         flashColor = new Color(240.0f / 255.0f, 141.0f / 255.0f, 141.0f / 255.0f);
-        originalColor = GetComponent<Renderer>().material.color;
-    }
+        nextShotPeriod = 1.0f;
 
-    void OnTriggerEnter(Collider collider)
-    {
-        if (collider.gameObject.tag == "Bolt")
+        Rigidbody rigidbody = GetComponent<Rigidbody>();
+        spinDirection = (Random.value > 0.5f);
+        if (spinDirection)
         {
-            health--;
+            rigidbody.velocity = new Vector3(0, 2, 0);
+            rigidbody.velocity = Quaternion.Euler(0, 0, Random.value * 360) * rigidbody.velocity;
+        }
+        else
+        {
+            rigidbody.velocity = new Vector3(0, -2, 0);
+            rigidbody.velocity = Quaternion.Euler(0, 0, Random.value * 360) * rigidbody.velocity;
 
-            if (health == 0)
-            {
-                GameObject newExplosion = Instantiate(plasmaExplosion, gameObject.transform.position, Quaternion.identity);
-                float time = newExplosion.GetComponent<ParticleSystem>().main.duration;
-                Destroy(newExplosion, time);
-                Destroy(gameObject);
-            }
-            else
-            {
-                GetComponent<Renderer>().material.SetColor("_Color", flashColor);
-                Invoke("ResetColor", 0.3f);
-            }
         }
     }
 
-    void ResetColor()
+    void FixedUpdate()
     {
-        GetComponent<Renderer>().material.SetColor("_Color", originalColor);
+        float spinSpeed = 3;
+        Rigidbody rigidbody = GetComponent<Rigidbody>();
+
+        if (spinDirection)
+        {
+            rigidbody.velocity = Quaternion.Euler(new Vector3(0, 0, spinSpeed)) * rigidbody.velocity;
+        }
+        else
+        {
+            rigidbody.velocity = Quaternion.Euler(new Vector3(0, 0, -spinSpeed)) * rigidbody.velocity;
+        }
     }
+
+    void Update()
+    {
+        if (!gameController.gameIsOver && Time.time > createdTime + 2.0)
+        {
+            ShootAtPlayer();
+        }
+    }
+
 }

@@ -130,8 +130,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 13
-  fireRate: 0.5
-  boltSpeed: 20
+  fireRate: 0.3
+  boltSpeed: 40
   health: 0
 --- !u!64 &44857109
 MeshCollider:
@@ -1153,6 +1153,18 @@ Prefab:
       propertyPath: m_RootOrder
       value: 8
       objectReference: {fileID: 0}
+    - target: {fileID: 4145641855575134, guid: 4955c0698b820ac4da93ff33a629253a, type: 2}
+      propertyPath: m_LocalScale.x
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4145641855575134, guid: 4955c0698b820ac4da93ff33a629253a, type: 2}
+      propertyPath: m_LocalScale.y
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4145641855575134, guid: 4955c0698b820ac4da93ff33a629253a, type: 2}
+      propertyPath: m_LocalScale.z
+      value: 0.2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4955c0698b820ac4da93ff33a629253a, type: 2}
   m_IsPrefabAsset: 0
@@ -1293,6 +1305,26 @@ CanvasRenderer:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1618229652}
   m_CullTransparentMesh: 0
+--- !u!1 &1643477504 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1822763774670762, guid: 4955c0698b820ac4da93ff33a629253a,
+    type: 2}
+  m_PrefabInternal: {fileID: 1026646168}
+--- !u!54 &1643477510
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1643477504}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1 &1749930002
 GameObject:
   m_ObjectHideFlags: 0
@@ -1333,6 +1365,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f2ce8d0b24041a64680e2b33e5e4e934, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  currentNumAliens: 0
+  gameIsOver: 0
+--- !u!1 &1800268877 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1255235964884782, guid: 4955c0698b820ac4da93ff33a629253a,
+    type: 2}
+  m_PrefabInternal: {fileID: 1026646168}
+--- !u!54 &1800268883
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1800268877}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1 &1978506737
 GameObject:
   m_ObjectHideFlags: 0

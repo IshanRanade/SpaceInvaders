@@ -32,6 +32,7 @@ public abstract class GammaController : MonoBehaviour {
         originalColor = GetComponent<Renderer>().material.color;
         centerOfMovement = transform.position;
         createdTime = Time.time;
+        nextShotTime = createdTime;
 
         SetSpecificValues();
     }
@@ -42,13 +43,17 @@ public abstract class GammaController : MonoBehaviour {
     {
         if (Time.time > nextShotTime)
         {
-            print("shooting bolt");
             nextShotTime += nextShotPeriod;
+
+            Vector3 target = player.transform.position;
+            target.x += Random.value * 4 - 2;
+            target.y += Random.value * 4 - 2;
+
             GameObject newAlienBolt = Instantiate(alienBolt, transform.position, transform.rotation);
 
             Rigidbody rigidbody = newAlienBolt.GetComponent<Rigidbody>();
 
-            Vector3 vel = player.transform.position - transform.position;
+            Vector3 vel = target - transform.position;
             vel.Normalize();
 
             Vector3 axis = new Vector3(0, 1, 0);

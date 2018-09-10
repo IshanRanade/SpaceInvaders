@@ -13,7 +13,6 @@ public class PlayerController : MonoBehaviour {
     private GameObject bolt;
     private GameObject camera;
     private GameObject reticule;
-    private GameObject playerHealthText;
 
     private float nextFire;
     public float health;
@@ -23,19 +22,25 @@ public class PlayerController : MonoBehaviour {
         bolt = GameObject.Find("Bolt");
         camera = GameObject.Find("Camera");
         reticule = GameObject.Find("Reticule");
+        nextFire = Time.time;
 
         reticule.GetComponent<Renderer>().material.SetColor("_Color", new Color(1.0f,.0f,.0f));
 
-        playerHealthText = GameObject.Find("PlayerHealthText");
-
         health = 3.0f;
+    }
+
+    public void Reset()
+    {
+        health = 3.0f;
+        nextFire = Time.time;
+        gameObject.GetComponent<Renderer>().enabled = true;
     }
 
     void Update()
     {
         if(health <= 0)
         {
-            Destroy(gameObject);
+            gameObject.GetComponent<Renderer>().enabled = false;
             return;
         }
 
@@ -148,7 +153,7 @@ public class PlayerController : MonoBehaviour {
 
         if (collider.gameObject.tag == "AlienBolt")
         {
-            health--;
+            health = Mathf.Max(0, health - 1);
         }
     }
 }
