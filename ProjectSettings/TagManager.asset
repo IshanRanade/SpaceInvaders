@@ -16,6 +16,9 @@ TagManager:
   - GammaBulky
   - Camera
   - Reticule
+  - WaveText
+  - PlayerHealthText
+  - AlienBolt
   layers:
   - Default
   - TransparentFX

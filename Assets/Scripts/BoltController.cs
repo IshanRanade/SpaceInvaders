@@ -3,9 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class BoltController : MonoBehaviour {
-
-    public Quaternion eventualRotation;
-    public Vector3 eventualVelocity;
 	
 	// Update is called once per frame
 	void Update () {

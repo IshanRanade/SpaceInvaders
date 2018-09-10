@@ -13,8 +13,10 @@ public class PlayerController : MonoBehaviour {
     private GameObject bolt;
     private GameObject camera;
     private GameObject reticule;
+    private GameObject playerHealthText;
 
     private float nextFire;
+    private float health;
 
     private void Start()
     {
@@ -23,6 +25,10 @@ public class PlayerController : MonoBehaviour {
         reticule = GameObject.Find("Reticule");
 
         reticule.GetComponent<Renderer>().material.SetColor("_Color", new Color(1.0f,.0f,.0f));
+
+        playerHealthText = GameObject.Find("PlayerHealthText");
+
+        health = 3.0f;
     }
 
     void Update()
@@ -132,6 +138,11 @@ public class PlayerController : MonoBehaviour {
         if(collision.gameObject.tag == "Bolt")
         {
             Physics.IgnoreCollision(collision.gameObject.GetComponent<Collider>(), GetComponent<Collider>());
+        }
+
+        if(collision.gameObject.tag == "AlienBolt")
+        {
+            health--;
         }
     }
 }

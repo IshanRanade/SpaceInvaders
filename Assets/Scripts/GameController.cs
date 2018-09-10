@@ -9,9 +9,10 @@ public class GameController : MonoBehaviour {
     private GameObject alien3;
 
     private GameObject boundary;
+    private GameObject waveText;
 
-    float closestDistance = 30;
-    float farthestDistance = 70;
+    float closestDistance = 25;
+    float farthestDistance = 50;
 
 	// Use this for initialization
 	void Start () {
@@ -20,6 +21,10 @@ public class GameController : MonoBehaviour {
         alien3 = GameObject.Find("GammaBulky");
 
         boundary = GameObject.Find("Boundary");
+        waveText = GameObject.Find("WaveText");
+        
+
+        waveText.SetActive(false);
 
         SpawnWave();
 	}
@@ -32,8 +37,8 @@ public class GameController : MonoBehaviour {
         {
             float range = farthestDistance - closestDistance;
             Instantiate(alien1, new Vector3(Random.value * alienRadius, Random.value * alienRadius, Random.value * range + closestDistance), new Quaternion());
-            Instantiate(alien2, new Vector3(Random.value * alienRadius, Random.value * alienRadius, Random.value * range + closestDistance), new Quaternion());
-            Instantiate(alien3, new Vector3(Random.value * alienRadius, Random.value * alienRadius, Random.value * range + closestDistance), new Quaternion());
+            //Instantiate(alien2, new Vector3(Random.value * alienRadius, Random.value * alienRadius, Random.value * range + closestDistance), new Quaternion());
+            //Instantiate(alien3, new Vector3(Random.value * alienRadius, Random.value * alienRadius, Random.value * range + closestDistance), new Quaternion());
         }
     }
 }
