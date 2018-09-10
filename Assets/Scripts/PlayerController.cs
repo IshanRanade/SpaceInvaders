@@ -36,6 +36,7 @@ public class PlayerController : MonoBehaviour {
             Vector3 vel = reticule.transform.position - camera.transform.position;
             vel.Normalize();
 
+
             boltRigidbody.velocity = boltSpeed * vel;
 
             Quaternion q;
@@ -46,6 +47,7 @@ public class PlayerController : MonoBehaviour {
             q.w = Vector3.Dot(new Vector3(0, 0, 1), vel);
 
             boltRigidbody.rotation = q * boltRigidbody.rotation;
+            boltRigidbody.position += vel * 2.0f;
         }
     }
 
