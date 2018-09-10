@@ -35,9 +35,17 @@ public class PlayerController : MonoBehaviour {
             Rigidbody boltRigidbody = newShot.GetComponent<Rigidbody>();
             Vector3 vel = reticule.transform.position - camera.transform.position;
             vel.Normalize();
-            vel = boltSpeed * vel;
 
-            boltRigidbody.velocity = vel;   
+            boltRigidbody.velocity = boltSpeed * vel;
+
+            Quaternion q;
+            Vector3 a = Vector3.Cross(new Vector3(0, 0, 1), vel);
+            q.x = a.x;
+            q.y = a.y;
+            q.z = a.z;
+            q.w = Vector3.Dot(new Vector3(0, 0, 1), vel);
+
+            boltRigidbody.rotation = q * boltRigidbody.rotation;
         }
     }
 
@@ -93,9 +101,27 @@ public class PlayerController : MonoBehaviour {
         float margin = 1;
         rigidbody.position = new Vector3(
             Mathf.Clamp(rigidbody.position.x, -0.5f * boundary.transform.localScale.x + margin, 0.5f * boundary.transform.localScale.x - margin),
-            Mathf.Clamp(rigidbody.position.y, -0.5f * boundary.transform.localScale.y + margin, 0.5f * boundary.transform.localScale.y - margin),
-            Mathf.Clamp(rigidbody.position.z, -0.5f * boundary.transform.localScale.z + margin, 0.5f * boundary.transform.localScale.z - margin)
+            Mathf.Clamp(rigidbody.position.y, -0.5f * boundary.transform.localScale.z + margin, 0.5f * boundary.transform.localScale.z - margin),
+            0.0f
         );
+
+        // Make the ship bank in the right direction
+        float maxRotationSpeed = 70;
+        float maxRotation = 35;
+        float rotationSpeed = 50;
+
+        if(rigidbody.velocity.x > 0)
+        {
+            transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.Euler(0, 0, -maxRotation), rotationSpeed * Time.deltaTime);
+
+        } else if(rigidbody.velocity.x < 0)
+        {
+            transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.Euler(0, 0, maxRotation), rotationSpeed * Time.deltaTime);
+        }
+        else
+        {
+            transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.Euler(0, 0, 0), 50 * Time.deltaTime);
+        }
 
     }
 
