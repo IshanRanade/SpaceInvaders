@@ -20,6 +20,7 @@ TagManager:
   - PlayerHealthText
   - AlienBolt
   - ScoreText
+  - BigExplosionEffect
   layers:
   - Default
   - TransparentFX

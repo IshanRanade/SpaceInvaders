@@ -14,8 +14,12 @@ public class PlayerController : MonoBehaviour {
     private GameObject camera;
     private GameObject reticule;
 
+    private GameObject bigExplosionEffect;
+
     private float nextFire;
     public float health;
+
+    bool playedExplosion;
 
     private void Start()
     {
@@ -25,8 +29,10 @@ public class PlayerController : MonoBehaviour {
         nextFire = Time.time;
 
         reticule.GetComponent<Renderer>().material.SetColor("_Color", new Color(1.0f,.0f,.0f));
+        bigExplosionEffect = GameObject.Find("BigExplosionEffect");
 
         health = 3.0f;
+        playedExplosion = false;
     }
 
     public void Reset()
@@ -34,12 +40,21 @@ public class PlayerController : MonoBehaviour {
         health = 3.0f;
         nextFire = Time.time;
         gameObject.GetComponent<Renderer>().enabled = true;
+        playedExplosion = false;
     }
 
     void Update()
     {
         if(health <= 0)
         {
+            if (!playedExplosion)
+            {
+                GameObject newExplosion = Instantiate(bigExplosionEffect, gameObject.transform.position, Quaternion.identity);
+                float time = newExplosion.GetComponent<ParticleSystem>().main.duration;
+                Destroy(newExplosion, time);
+                playedExplosion = true;
+            }
+
             gameObject.GetComponent<Renderer>().enabled = false;
             return;
         }
