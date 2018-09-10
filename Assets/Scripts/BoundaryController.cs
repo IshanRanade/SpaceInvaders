@@ -24,17 +24,17 @@ public class BoundaryController : MonoBehaviour {
 
         Color newColor = GetComponent<Renderer>().material.color;
 
-        float startFadingDistance = 5;
+        float startFadingDistance = 8;
 
         if (distance < startFadingDistance || distanceSigned > 0)
         {
             if (distanceSigned > 0)
             {
-                newColor.a = 1.0f;
+                newColor.a = 0.25f;
             }
             else
             {
-                newColor.a = 1.0f - distance / startFadingDistance;
+                newColor.a = 0.25f - distance / startFadingDistance;
             }
         } else
         {

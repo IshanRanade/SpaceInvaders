@@ -10,8 +10,8 @@ public class GameController : MonoBehaviour {
 
     private GameObject boundary;
 
-    float closestDistance = 40;
-    float farthestDistance = 80;
+    float closestDistance = 30;
+    float farthestDistance = 70;
 
 	// Use this for initialization
 	void Start () {
