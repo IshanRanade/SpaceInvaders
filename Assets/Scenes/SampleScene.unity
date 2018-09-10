@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.006481488, g: 0.0030977665, b: 0.0025081036, a: 1}
+  m_IndirectSpecularColor: {r: 0.0005860804, g: 0.07883903, b: 0.20591775, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -396,7 +396,7 @@ GameObject:
   - component: {fileID: 534669906}
   m_Layer: 0
   m_Name: Camera
-  m_TagString: Untagged
+  m_TagString: Camera
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -454,13 +454,13 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 534669902}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.35258204, z: -7.353055}
+  m_LocalRotation: {x: 0.035139594, y: -0, z: -0, w: 0.9993825}
+  m_LocalPosition: {x: 0, y: 0.68, z: -7.353055}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 3
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 4.0280004, y: 0, z: 0}
 --- !u!114 &534669906
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -537,9 +537,9 @@ GameObject:
   - component: {fileID: 887128522}
   - component: {fileID: 887128521}
   - component: {fileID: 887128520}
-  - component: {fileID: 887128519}
   - component: {fileID: 887128524}
   - component: {fileID: 887128523}
+  - component: {fileID: 887128519}
   m_Layer: 0
   m_Name: Boundary
   m_TagString: Boundary
@@ -547,18 +547,20 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!65 &887128519
-BoxCollider:
+--- !u!64 &887128519
+MeshCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 887128518}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 0
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Convex: 1
+  m_CookingOptions: 14
+  m_SkinWidth: 0.01
+  m_Mesh: {fileID: 10206, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!23 &887128520
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -694,7 +696,7 @@ GameObject:
   - component: {fileID: 967016834}
   m_Layer: 0
   m_Name: Reticule
-  m_TagString: Untagged
+  m_TagString: Reticule
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -706,15 +708,15 @@ RectTransform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 967016831}
   m_LocalRotation: {x: -0.7071068, y: -0, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 0, z: 29.67695}
-  m_LocalScale: {x: 0.49806085, y: 0.49806213, z: 0.49806213}
+  m_LocalPosition: {x: 0, y: 0, z: 18.05}
+  m_LocalScale: {x: 0.38844755, y: 0.38844854, z: 0.38844854}
   m_Children: []
   m_Father: {fileID: 874083808}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -0.35258}
+  m_AnchoredPosition: {x: 0, y: -0.35}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!23 &967016834
@@ -732,7 +734,7 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RenderingLayerMask: 4294967295
   m_Materials:
-  - {fileID: 2100000, guid: f36160889cf32ca4f8db01d1d6e19bdc, type: 2}
+  - {fileID: 2100000, guid: 799ff3a49b1fc8e46bb8c6a46791ce84, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

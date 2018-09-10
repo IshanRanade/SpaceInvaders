@@ -9,13 +9,20 @@ public class PlayerController : MonoBehaviour {
 
     public float fireRate;
     public float boltSpeed;
+
     private GameObject bolt;
+    private GameObject camera;
+    private GameObject reticule;
 
     private float nextFire;
 
     private void Start()
     {
         bolt = GameObject.Find("Bolt");
+        camera = GameObject.Find("Camera");
+        reticule = GameObject.Find("Reticule");
+
+        reticule.GetComponent<Renderer>().material.SetColor("_Color", new Color(1.0f,.0f,.0f));
     }
 
     void Update()
@@ -23,10 +30,14 @@ public class PlayerController : MonoBehaviour {
         if(Input.GetKey(KeyCode.Space) && Time.time > nextFire)
         {
             nextFire = Time.time + fireRate;
-            GameObject newShot = Instantiate(bolt, GetComponent<Rigidbody>().position, bolt.transform.rotation);
+            GameObject newShot = Instantiate(bolt, camera.transform.position, bolt.transform.rotation);
 
             Rigidbody boltRigidbody = newShot.GetComponent<Rigidbody>();
-            boltRigidbody.velocity = new Vector3(0, 0, boltSpeed);   
+            Vector3 vel = reticule.transform.position - camera.transform.position;
+            vel.Normalize();
+            vel = boltSpeed * vel;
+
+            boltRigidbody.velocity = vel;   
         }
     }
 
