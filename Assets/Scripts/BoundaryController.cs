@@ -25,25 +25,18 @@ public class BoundaryController : MonoBehaviour {
         }
 
         float radius = transform.localScale.x / 2.0f;
-        float distanceSigned = Mathf.Sqrt(Mathf.Pow(player.transform.position.x, 2.0f) + Mathf.Pow(player.transform.position.y, 2.0f)) - radius;
-        float distance = Mathf.Abs(distanceSigned);
-
+        float distance = Mathf.Sqrt(Mathf.Pow(player.transform.position.x, 2.0f) + Mathf.Pow(player.transform.position.y, 2.0f)) - radius;
+        distance = Mathf.Min(0, distance);
+        distance = Mathf.Abs(distance);
 
         Color newColor = GetComponent<Renderer>().material.color;
 
-        float startFadingDistance = 8;
+        float startFadingDistance = 5;
 
-        if (distance < startFadingDistance || distanceSigned > 0)
+        if (distance < startFadingDistance)
         {
-            GetComponent<Renderer>().enabled = false;
-            if (distanceSigned > 0)
-            {
-                newColor.a = 0.25f;
-            }
-            else
-            {
-                newColor.a = 0.25f - distance / startFadingDistance;
-            }
+            GetComponent<Renderer>().enabled = true;
+            newColor.a = 0.5f * (1.0f - (distance / startFadingDistance));
         }
         else
         {

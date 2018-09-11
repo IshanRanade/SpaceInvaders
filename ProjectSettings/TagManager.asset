@@ -21,6 +21,10 @@ TagManager:
   - AlienBolt
   - ScoreText
   - BigExplosionEffect
+  - PlasmaExplosionSound
+  - PlayerBoltSound
+  - AlienBoltSound
+  - PlayerExplosionSound
   layers:
   - Default
   - TransparentFX

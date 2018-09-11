@@ -10,6 +10,7 @@ public class GammaRidgedController : GammaController {
         alienBoltSpeed = 45f;
         health = 3;
         flashColor = new Color(0.0f / 255.0f, 211.0f / 255.0f, 255.0f / 255.0f);
+        flashColor *= 1.5f;
         nextShotPeriod = 0.75f;
 
         Rigidbody rigidbody = GetComponent<Rigidbody>();

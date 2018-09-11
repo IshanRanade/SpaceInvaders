@@ -13,6 +13,7 @@ public class GammaBulkyController : GammaController {
         alienBoltSpeed = 55f;
         health = 5;
         flashColor = new Color(240.0f / 255.0f, 141.0f / 255.0f, 141.0f / 255.0f);
+        flashColor *= 1.5f;
         nextShotPeriod = 1.0f;
 
         Rigidbody rigidbody = GetComponent<Rigidbody>();

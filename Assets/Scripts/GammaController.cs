@@ -9,6 +9,8 @@ public abstract class GammaController : MonoBehaviour {
     protected GameObject alienBolt;
     protected GameObject player;
     protected GameController gameController;
+    protected GameObject plasmaExplosionSound;
+    protected GameObject alienBoltSound;
 
     protected Color flashColor;
     protected Color originalColor;
@@ -33,6 +35,9 @@ public abstract class GammaController : MonoBehaviour {
         centerOfMovement = transform.position;
         createdTime = Time.time;
         nextShotTime = createdTime;
+        plasmaExplosionSound = GameObject.Find("PlasmaExplosionSound");
+        alienBoltSound = GameObject.Find("AlienBoltSound");
+            
 
         SetSpecificValues();
     }
@@ -60,6 +65,8 @@ public abstract class GammaController : MonoBehaviour {
             rigidbody.rotation = Quaternion.FromToRotation(axis, vel);
 
             rigidbody.velocity = vel * alienBoltSpeed;
+
+            //alienBoltSound.GetComponent<AudioSource>().Play();
         }
     }
 
@@ -78,6 +85,8 @@ public abstract class GammaController : MonoBehaviour {
 
                 gameController.UpdateScore(scorePoints);
                 gameController.currentNumAliens--;
+
+                plasmaExplosionSound.GetComponent<AudioSource>().Play();
             }
             else
             {
