@@ -90,7 +90,12 @@ public class GameController : MonoBehaviour {
 
     void Update()
     {
-        if(resetting)
+        if (Input.GetKey(KeyCode.Escape))
+        {
+            Application.Quit();
+        }
+
+        if (resetting)
         {
             return;
         }
@@ -120,7 +125,7 @@ public class GameController : MonoBehaviour {
 
     void ResetGame()
     {
-        if (Input.GetKey(KeyCode.Escape))
+        if (Input.GetKey(KeyCode.R))
         {
             resetting = true;
 
