@@ -5,18 +5,18 @@ using System.Linq;
 
 public abstract class GammaController : MonoBehaviour {
 
-    protected GameObject plasmaExplosion;
-    protected GameObject alienBolt;
     protected GameObject player;
     protected GameController gameController;
-    protected GameObject plasmaExplosionSound;
-    protected GameObject alienBoltSound;
 
+    protected AudioSource plasmaExplosionSound;
+    protected AudioSource alienBoltSound;
+
+    protected GameObject plasmaExplosion;
+    protected GameObject alienBolt;
+    
     protected Color flashColor;
     protected Color originalColor;
-    protected Vector3 centerOfMovement;
-
-    protected bool spinDirection;
+    
     protected float nextShotTime;
     protected float nextShotPeriod;
     protected int health;
@@ -27,47 +27,44 @@ public abstract class GammaController : MonoBehaviour {
 
     void Start()
     {
-        alienBolt = GameObject.Find("AlienBolt");
+        alienBolt = Resources.Load<GameObject>("Prefab/AlienBolt");
         player = GameObject.Find("Player");
         gameController = GameObject.Find("GameController").GetComponent<GameController>();
         
         originalColor = GetComponent<Renderer>().material.color;
-        centerOfMovement = transform.position;
         createdTime = Time.time;
         nextShotTime = createdTime;
-        plasmaExplosionSound = GameObject.Find("PlasmaExplosionSound");
-        alienBoltSound = GameObject.Find("AlienBoltSound");
-            
 
+        plasmaExplosionSound = GameObject.Find("PlasmaExplosionSound").GetComponent<AudioSource>();
+        alienBoltSound = GameObject.Find("AlienBoltSound").GetComponent<AudioSource>();
+
+        plasmaExplosion = Resources.Load<GameObject>("Prefab/PlasmaExplosionEffect");
+            
         SetSpecificValues();
     }
 
     public abstract void SetSpecificValues();
 
-    protected void ShootAtPlayer()
+    protected void Shoot()
     {
-        if (Time.time > nextShotTime)
+        if(Time.time > nextShotTime)
         {
             nextShotTime += nextShotPeriod;
 
-            Vector3 target = player.transform.position;
-            target.x += Random.value * 4 - 2;
-            target.y += Random.value * 4 - 2;
+            GameObject newAlienBolt = Instantiate(alienBolt, transform.position, Quaternion.identity);
 
-            GameObject newAlienBolt = Instantiate(alienBolt, transform.position, transform.rotation);
+            newAlienBolt.transform.rotation *= Quaternion.Euler(90, 0, 0);
 
-            Rigidbody rigidbody = newAlienBolt.GetComponent<Rigidbody>();
-
-            Vector3 vel = target - transform.position;
-            vel.Normalize();
-
-            Vector3 axis = new Vector3(0, 1, 0);
-            rigidbody.rotation = Quaternion.FromToRotation(axis, vel);
-
-            rigidbody.velocity = vel * alienBoltSpeed;
-
-            //alienBoltSound.GetComponent<AudioSource>().Play();
+            Rigidbody alienBoltRigidbody = newAlienBolt.GetComponent<Rigidbody>();
+            alienBoltRigidbody.velocity = new Vector3(0, 0, -1) * alienBoltSpeed;
+            
+            alienBoltSound.Play();
         }
+    }
+
+    void Update()
+    {
+        Shoot();
     }
 
     void OnTriggerEnter(Collider collider)
@@ -97,11 +94,13 @@ public abstract class GammaController : MonoBehaviour {
                 Invoke("ResetColor", 0.3f);
             }
         }
-
-        string[] tags = { "GammaZoid", "GammaRidged", "GammaBulky", "AlienBolt", "Bolt", "Boundary" };
-        if (tags.Contains(collider.gameObject.tag))
+        else
         {
-            Physics.IgnoreCollision(collider.gameObject.GetComponent<Collider>(), GetComponent<Collider>());
+            string[] tags = { "GammaZoid", "GammaRidged", "GammaBulky", "AlienBolt", "Bolt", "Boundary" };
+            if (tags.Contains(collider.gameObject.tag))
+            {
+                Physics.IgnoreCollision(collider.gameObject.GetComponent<Collider>(), GetComponent<Collider>());
+            }
         }
     }
 

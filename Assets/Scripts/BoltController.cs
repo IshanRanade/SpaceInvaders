@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 public class BoltController : MonoBehaviour {
 	
@@ -20,7 +21,8 @@ public class BoltController : MonoBehaviour {
            Physics.IgnoreCollision(collider.gameObject.GetComponent<Collider>(), GetComponent<Collider>());
         }
 
-        if (collider.gameObject.tag == "GammaZoid")
+        string[] tags = { "GammaZoid", "GammaRidged", "GammaBulky" };
+        if (tags.Contains(collider.gameObject.tag))
         {
             Destroy(gameObject);
         }

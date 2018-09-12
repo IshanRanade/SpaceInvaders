@@ -32,9 +32,9 @@ public class GameController : MonoBehaviour {
     // Use this for initialization
     void Start()
     {
-        alien1 = GameObject.Find("GammaZoid");
-        alien2 = GameObject.Find("GammaRidged");
-        alien3 = GameObject.Find("GammaBulky");
+        alien1 = Resources.Load<GameObject>("GammaZoids/Prefabs/GammaZoid");
+        alien2 = Resources.Load<GameObject>("GammaZoids/Prefabs/GammaRidged");
+        alien3 = Resources.Load<GameObject>("GammaZoids/Prefabs/GammaBulky");
         player = GameObject.Find("Player");
 
         boundary = GameObject.Find("Boundary");
@@ -50,7 +50,8 @@ public class GameController : MonoBehaviour {
         resetting = false;
 
         waveText.SetActive(false);
-        
+
+        SpawnWave();
     }
 
     void SpawnWave()
@@ -61,23 +62,23 @@ public class GameController : MonoBehaviour {
 
         float range = farthestDistance - closestDistance;
 
-        for (int i = 0; i < 3 + currentWave * 2; i++)
+        for (int i = 0; i < 1; i++)
         {
-            Instantiate(alien1, new Vector3((Random.value * 2 + -1) * alienRadius, (Random.value * 2 + -1) * alienRadius, Random.value * range + closestDistance), new Quaternion());
+            Instantiate(alien1, new Vector3(Random.value * 20 + -10, 0, Random.value * 10 + 5), new Quaternion());
             currentNumAliens++;
         }
 
-        for (int i = 0; i < currentWave * 2; i++)
-        {
-            Instantiate(alien2, new Vector3((Random.value * 2 + -1) * alienRadius, (Random.value * 2 + -1) * alienRadius, Random.value * range + closestDistance), new Quaternion());
-            currentNumAliens++;
-        }
+        //for (int i = 0; i < currentWave * 2; i++)
+        //{
+        //    Instantiate(alien2, new Vector3((Random.value * 2 + -1) * alienRadius, (Random.value * 2 + -1) * alienRadius, Random.value * range + closestDistance), new Quaternion());
+        //    currentNumAliens++;
+        //}
 
-        for (int i = 0; i < currentWave - 1; i++)
-        {
-            Instantiate(alien3, new Vector3((Random.value * 2 + -1) * alienRadius, (Random.value * 2 + -1) * alienRadius, Random.value * range + closestDistance), new Quaternion());
-            currentNumAliens++;
-        }
+        //for (int i = 0; i < currentWave - 1; i++)
+        //{
+        //    Instantiate(alien3, new Vector3((Random.value * 2 + -1) * alienRadius, (Random.value * 2 + -1) * alienRadius, Random.value * range + closestDistance), new Quaternion());
+        //    currentNumAliens++;
+        //}
 
         spawningWave = false;
         currentWave++;
@@ -90,37 +91,37 @@ public class GameController : MonoBehaviour {
 
     void Update()
     {
-        if (Input.GetKey(KeyCode.Escape))
-        {
-            Application.Quit();
-        }
+        //if (Input.GetKey(KeyCode.Escape))
+        //{
+        //    Application.Quit();
+        //}
 
-        if (resetting)
-        {
-            return;
-        }
+        //if (resetting)
+        //{
+        //    return;
+        //}
 
-        if(gameIsOver)
-        {
-            ResetGame();
-            return;
-        }
+        //if(gameIsOver)
+        //{
+        //    ResetGame();
+        //    return;
+        //}
 
-        scoreText.GetComponent<Text>().text = "Score: " + score;
-        playerHealthText.GetComponent<Text>().text = "Health: " + player.GetComponent<PlayerController>().health;
+        //scoreText.GetComponent<Text>().text = "Score: " + score;
+        //playerHealthText.GetComponent<Text>().text = "Health: " + player.GetComponent<PlayerController>().health;
 
-        if(player.GetComponent<PlayerController>().health <= 0)
-        {
-            gameIsOver = true;
-        }
+        //if(player.GetComponent<PlayerController>().health <= 0)
+        //{
+        //    gameIsOver = true;
+        //}
 
-        if(currentNumAliens == 0 && !spawningWave)
-        {
-            waveText.SetActive(true);
-            waveText.GetComponent<Text>().text = "Wave " + currentWave;
-            Invoke("SpawnWave", 1);
-            spawningWave = true;
-        }
+        //if(currentNumAliens == 0 && !spawningWave)
+        //{
+        //    waveText.SetActive(true);
+        //    waveText.GetComponent<Text>().text = "Wave " + currentWave;
+        //    Invoke("SpawnWave", 1);
+        //    spawningWave = true;
+        //}
     }
 
     void ResetGame()

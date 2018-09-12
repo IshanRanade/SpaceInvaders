@@ -9,13 +9,8 @@ public class AlienBoltController : MonoBehaviour {
     void Update()
     {
         // Delete the bolt when it goes too far
-        if (GetComponent<Rigidbody>().position.z < 0 && GetComponent<Rigidbody>().position.z > -5)
-        {
-            Destroy(gameObject);
-        }
-
-        if(GetComponent<Rigidbody>().position.z < -40)
-        {
+        if (GetComponent<Rigidbody>().position.z < -30)
+        { 
             Destroy(gameObject);
         }
     }

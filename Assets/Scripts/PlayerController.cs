@@ -5,19 +5,15 @@ using System.Linq;
 
 public class PlayerController : MonoBehaviour {
 
-    public float speed;
+    private GameObject bolt;
+    private AudioSource playerBoltSound;
+    private AudioSource playerExplosionSound;
+    private GameObject bigExplosionEffect;
+    private GameController gameController;
 
+    public float speed;
     public float fireRate;
     public float boltSpeed;
-
-    private GameObject bolt;
-    private GameObject camera;
-    private GameObject reticule;
-    private GameObject playerBoltSound;
-    private GameObject playerExplosionSound;
-
-    private GameObject bigExplosionEffect;
-
     private float nextFire;
     public float health;
     public float maxHealth;
@@ -25,27 +21,25 @@ public class PlayerController : MonoBehaviour {
     private Color originalColor;
     private Color flashColor;
 
-    bool playedExplosion;
+    private bool isDead;
 
     private void Start()
     {
-        bolt = GameObject.Find("Bolt");
-        camera = GameObject.Find("Camera");
-        reticule = GameObject.Find("Reticule");
-        playerBoltSound = GameObject.Find("PlayerBoltSound");
-        playerExplosionSound = GameObject.Find("PlayerExplosionSound");
-        nextFire = Time.time;
+        bolt = Resources.Load<GameObject>("Prefab/Bolt");
+        playerBoltSound = GameObject.Find("PlayerBoltSound").GetComponent<AudioSource>();
+        playerExplosionSound = GameObject.Find("PlayerExplosionSound").GetComponent<AudioSource>();
+        bigExplosionEffect = Resources.Load<GameObject>("Prefab/BigExplosionEffect");
 
-        reticule.GetComponent<Renderer>().material.SetColor("_Color", new Color(1.0f,.0f,.0f));
-        bigExplosionEffect = GameObject.Find("BigExplosionEffect");
-
+        gameController = GameObject.Find("GameController").GetComponent<GameController>();
+        
         flashColor = new Color(10.0f, 5.0f, 0.0f);
         flashColor *= 0.75f;
         originalColor = gameObject.GetComponent<Renderer>().material.color;
 
+        nextFire = Time.time;
         maxHealth = 5.0f;
         health = maxHealth;
-        playedExplosion = false;
+        isDead = false;
     }
 
     public void Reset()
@@ -53,96 +47,62 @@ public class PlayerController : MonoBehaviour {
         health = maxHealth;
         nextFire = Time.time;
         gameObject.GetComponent<Renderer>().enabled = true;
-        playedExplosion = false;
+        isDead = false; 
     }
 
     void Update()
     {
-        if(health <= 0)
+        if(isDead)
         {
-            if (!playedExplosion)
-            {
-                GameObject newExplosion = Instantiate(bigExplosionEffect, gameObject.transform.position, Quaternion.identity);
-                float time = newExplosion.GetComponent<ParticleSystem>().main.duration;
-                Destroy(newExplosion, time);
-                playedExplosion = true;
-
-                playerExplosionSound.GetComponent<AudioSource>().Play();
-            }
-
-            gameObject.GetComponent<Renderer>().enabled = false;
             return;
         }
-    }
 
-    void FixedUpdate()
-    {
+        if(health <= 0)
+        {
+            GameObject newExplosion = Instantiate(bigExplosionEffect, gameObject.transform.position, Quaternion.identity);
+            float time = newExplosion.GetComponent<ParticleSystem>().main.duration;
+            Destroy(newExplosion, time);
+
+            playerExplosionSound.GetComponent<AudioSource>().Play();
+
+            gameObject.GetComponent<Renderer>().enabled = false;
+            isDead = true;
+            return;
+        }
+
         KeyCode xUpKey = KeyCode.RightArrow;
         KeyCode xDownKey = KeyCode.LeftArrow;
-        KeyCode yUpKey = KeyCode.UpArrow;
-        KeyCode yDownKey = KeyCode.DownArrow;
-        KeyCode zUpKey = KeyCode.W;
-        KeyCode zDownKey = KeyCode.S;
+        KeyCode shootKey = KeyCode.Space;
 
         float xMovement = 0.0f;
-        float yMovement = 0.0f;
-        float zMovement = 0.0f;
 
-        // Use key input to change the velocity of the player in the correct direction 
-
-        if(Input.GetKey(xUpKey))
+        if (Input.GetKey(xUpKey))
         {
             xMovement += 1.0f;
         }
-        if(Input.GetKey(xDownKey))
+        if (Input.GetKey(xDownKey))
         {
             xMovement -= 1.0f;
         }
 
-        if(Input.GetKey(yUpKey))
-        {
-            yMovement += 1.0f;
-        }
-        if(Input.GetKey(yDownKey))
-        {
-            yMovement -= 1.0f;
-        }
-
-        if (Input.GetKey(zUpKey))
-        {
-            zMovement += 1.0f;
-        }
-        if (Input.GetKey(zDownKey))
-        {
-            zMovement -= 1.0f;
-        }
-        if (Input.GetKey(KeyCode.Space) && Time.time > nextFire)
+        if (Input.GetKey(shootKey) && Time.time > nextFire)
         {
             nextFire = Time.time + fireRate;
-            GameObject newShot = Instantiate(bolt, camera.transform.position, bolt.transform.rotation);
+            GameObject newShot = Instantiate(bolt, transform.position, Quaternion.identity);
+
+            newShot.transform.rotation *= Quaternion.Euler(90, 0, 0);
+            newShot.transform.position += new Vector3(0, 0, 1.5f);
 
             Rigidbody boltRigidbody = newShot.GetComponent<Rigidbody>();
-            Vector3 vel = reticule.transform.position - camera.transform.position;
-            vel.Normalize();
-
+            Vector3 vel = new Vector3(0, 0, 1);
 
             boltRigidbody.velocity = boltSpeed * vel;
-
-            Quaternion q;
-            Vector3 a = Vector3.Cross(new Vector3(0, 0, 1), vel);
-            q.x = a.x;
-            q.y = a.y;
-            q.z = a.z;
-            q.w = Vector3.Dot(new Vector3(0, 0, 1), vel);
-
-            boltRigidbody.rotation = q * boltRigidbody.rotation;
-            boltRigidbody.position += vel * 2.0f;
 
             playerBoltSound.GetComponent<AudioSource>().Play();
         }
 
         Rigidbody rigidbody = GetComponent<Rigidbody>();
-        rigidbody.velocity = new Vector3(speed * xMovement, speed * yMovement, speed * zMovement);
+        rigidbody.velocity = new Vector3(speed * xMovement, 0, 0);
 
         // Clamp the player position to be inside the boundary
 
@@ -151,7 +111,7 @@ public class PlayerController : MonoBehaviour {
         float margin = 1;
         rigidbody.position = new Vector3(
             Mathf.Clamp(rigidbody.position.x, -0.5f * boundary.transform.localScale.x + margin, 0.5f * boundary.transform.localScale.x - margin),
-            Mathf.Clamp(rigidbody.position.y, -0.5f * boundary.transform.localScale.z + margin, 0.5f * boundary.transform.localScale.z - margin),
+            0.0f,
             0.0f
         );
 
@@ -160,11 +120,12 @@ public class PlayerController : MonoBehaviour {
         float maxRotation = 35;
         float rotationSpeed = 50;
 
-        if(rigidbody.velocity.x > 0)
+        if (rigidbody.velocity.x > 0)
         {
             transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.Euler(0, 0, -maxRotation), rotationSpeed * Time.deltaTime);
 
-        } else if(rigidbody.velocity.x < 0)
+        }
+        else if (rigidbody.velocity.x < 0)
         {
             transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.Euler(0, 0, maxRotation), rotationSpeed * Time.deltaTime);
         }
@@ -172,7 +133,6 @@ public class PlayerController : MonoBehaviour {
         {
             transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.Euler(0, 0, 0), 50 * Time.deltaTime);
         }
-
     }
 
     void OnTriggerEnter(Collider collider)
