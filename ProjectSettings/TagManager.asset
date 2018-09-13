@@ -25,6 +25,9 @@ TagManager:
   - PlayerBoltSound
   - AlienBoltSound
   - PlayerExplosionSound
+  - BackWall
+  - Cube
+  - Capsule
   layers:
   - Default
   - TransparentFX
@@ -35,9 +38,9 @@ TagManager:
   - 
   - 
   - PostProcessing
-  - 
-  - 
-  - 
+  - Player
+  - AlienBolt
+  - Aliens
   - 
   - 
   - 

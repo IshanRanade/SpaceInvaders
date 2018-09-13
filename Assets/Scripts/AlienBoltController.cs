@@ -5,6 +5,15 @@ using System.Linq;
 
 public class AlienBoltController : MonoBehaviour {
 
+    bool isActive;
+    GameObject player;
+
+    void Start()
+    {
+        isActive = true;
+        player = GameObject.Find("Player");
+    }
+
     // Update is called once per frame
     void Update()
     {
@@ -15,17 +24,14 @@ public class AlienBoltController : MonoBehaviour {
         }
     }
 
-    void OnTriggerEnter(Collider collider)
+    void OnCollisionEnter(Collision collision)
     {
-        if (collider.gameObject.tag == "Player")
+        // If this is the first collision with a player decrease its health
+        if(collision.gameObject.tag == "Player" && isActive)
         {
-            Destroy(gameObject);
+            player.GetComponent<PlayerController>().GotHit();
         }
 
-        string[] tags = { "GammaZoid", "GammaRidged", "GammaBulky", "AlienBolt", "Bolt", "Boundary" };
-        if (tags.Contains(collider.gameObject.tag))
-        {
-            Physics.IgnoreCollision(collider.gameObject.GetComponent<Collider>(), GetComponent<Collider>());
-        }
+        isActive = false;
     }
 }

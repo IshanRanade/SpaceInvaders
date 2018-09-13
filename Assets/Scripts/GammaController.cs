@@ -57,7 +57,9 @@ public abstract class GammaController : MonoBehaviour {
 
             Rigidbody alienBoltRigidbody = newAlienBolt.GetComponent<Rigidbody>();
             alienBoltRigidbody.velocity = new Vector3(0, 0, -1) * alienBoltSpeed;
-            
+
+            newAlienBolt.transform.position += new Vector3(0, 0, -3.0f);
+
             alienBoltSound.Play();
         }
     }

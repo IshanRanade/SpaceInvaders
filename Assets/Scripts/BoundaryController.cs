@@ -24,6 +24,8 @@ public class BoundaryController : MonoBehaviour {
             return;
         }
 
+        GetComponent<Renderer>().enabled = false;
+
         //float radius = transform.localScale.x / 2.0f;
         //float distance = Mathf.Sqrt(Mathf.Pow(player.transform.position.x, 2.0f) + Mathf.Pow(player.transform.position.y, 2.0f)) - radius;
         //distance = Mathf.Min(0, distance);

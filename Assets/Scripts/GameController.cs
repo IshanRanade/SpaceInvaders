@@ -64,6 +64,8 @@ public class GameController : MonoBehaviour {
 
         for (int i = 0; i < 1; i++)
         {
+            //GameObject cube = Instantiate(GameObject.Find("Cube"), new Vector3(0, 0, 10), Quaternion.identity);
+            //cube.GetComponent<Rigidbody>().velocity = new Vector3(0, 0, -10);
             Instantiate(alien1, new Vector3(Random.value * 20 + -10, 0, Random.value * 10 + 5), new Quaternion());
             currentNumAliens++;
         }
@@ -91,10 +93,10 @@ public class GameController : MonoBehaviour {
 
     void Update()
     {
-        //if (Input.GetKey(KeyCode.Escape))
-        //{
-        //    Application.Quit();
-        //}
+        if (Input.GetKey(KeyCode.Escape))
+        {
+            Application.Quit();
+        }
 
         //if (resetting)
         //{
@@ -107,8 +109,8 @@ public class GameController : MonoBehaviour {
         //    return;
         //}
 
-        //scoreText.GetComponent<Text>().text = "Score: " + score;
-        //playerHealthText.GetComponent<Text>().text = "Health: " + player.GetComponent<PlayerController>().health;
+        scoreText.GetComponent<Text>().text = "Score: " + score;
+        playerHealthText.GetComponent<Text>().text = "Health: " + player.GetComponent<PlayerController>().health;
 
         //if(player.GetComponent<PlayerController>().health <= 0)
         //{

@@ -37,7 +37,7 @@ public class PlayerController : MonoBehaviour {
         originalColor = gameObject.GetComponent<Renderer>().material.color;
 
         nextFire = Time.time;
-        maxHealth = 5.0f;
+        maxHealth = 100.0f;
         health = maxHealth;
         isDead = false;
     }
@@ -50,7 +50,7 @@ public class PlayerController : MonoBehaviour {
         isDead = false; 
     }
 
-    void Update()
+    void FixedUpdate()
     {
         if(isDead)
         {
@@ -87,14 +87,18 @@ public class PlayerController : MonoBehaviour {
 
         if (Input.GetKey(shootKey) && Time.time > nextFire)
         {
+            print(transform.forward);
             nextFire = Time.time + fireRate;
             GameObject newShot = Instantiate(bolt, transform.position, Quaternion.identity);
 
+            newShot.transform.forward = transform.forward;
             newShot.transform.rotation *= Quaternion.Euler(90, 0, 0);
-            newShot.transform.position += new Vector3(0, 0, 1.5f);
+            
+            newShot.transform.position += transform.rotation * new Vector3(0, 0, 2.0f);
 
             Rigidbody boltRigidbody = newShot.GetComponent<Rigidbody>();
-            Vector3 vel = new Vector3(0, 0, 1);
+            Vector3 vel = transform.forward;
+            vel.Normalize();
 
             boltRigidbody.velocity = boltSpeed * vel;
 
@@ -103,9 +107,8 @@ public class PlayerController : MonoBehaviour {
 
         Rigidbody rigidbody = GetComponent<Rigidbody>();
         rigidbody.velocity = new Vector3(speed * xMovement, 0, 0);
-
+        
         // Clamp the player position to be inside the boundary
-
         GameObject boundary = GameObject.Find("Boundary");
 
         float margin = 1;
@@ -116,40 +119,32 @@ public class PlayerController : MonoBehaviour {
         );
 
         // Make the ship bank in the right direction
-        float maxRotationSpeed = 70;
         float maxRotation = 35;
-        float rotationSpeed = 50;
+
+        Quaternion targetRotation;
 
         if (rigidbody.velocity.x > 0)
         {
-            transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.Euler(0, 0, -maxRotation), rotationSpeed * Time.deltaTime);
-
+            targetRotation = Quaternion.Euler(0, 0, -maxRotation);
         }
         else if (rigidbody.velocity.x < 0)
         {
-            transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.Euler(0, 0, maxRotation), rotationSpeed * Time.deltaTime);
+            targetRotation = Quaternion.Euler(0, 0, maxRotation);
         }
         else
         {
-            transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.Euler(0, 0, 0), 50 * Time.deltaTime);
+            targetRotation = Quaternion.identity;
         }
+
+        transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, 100.0f * Time.deltaTime);
     }
 
-    void OnTriggerEnter(Collider collider)
+    public void GotHit()
     {
-        if (collider.gameObject.tag == "Bolt")
-        {
-            Physics.IgnoreCollision(collider.gameObject.GetComponent<Collider>(), GetComponent<Collider>());
-        }
+        health = Mathf.Max(0, health - 1);
 
-        if (collider.gameObject.tag == "AlienBolt")
-        {
-            health = Mathf.Max(0, health - 1);
-
-            gameObject.GetComponent<Renderer>().material.SetColor("_Color", flashColor);
-            Invoke("ResetColor", 0.5f);
-
-        }
+        gameObject.GetComponent<Renderer>().material.SetColor("_Color", flashColor);
+        Invoke("ResetColor", 0.5f);
     }
 
     void ResetColor()
