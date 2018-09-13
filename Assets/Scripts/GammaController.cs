@@ -25,6 +25,8 @@ public abstract class GammaController : MonoBehaviour {
 
     protected float createdTime;
 
+    public bool canShoot;
+
     void Start()
     {
         alienBolt = Resources.Load<GameObject>("Prefab/AlienBolt");
@@ -66,7 +68,10 @@ public abstract class GammaController : MonoBehaviour {
 
     void Update()
     {
-        Shoot();
+        if (canShoot)
+        {
+            Shoot();
+        }
     }
 
     void OnTriggerEnter(Collider collider)

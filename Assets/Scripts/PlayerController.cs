@@ -47,7 +47,11 @@ public class PlayerController : MonoBehaviour {
         health = maxHealth;
         nextFire = Time.time;
         gameObject.GetComponent<Renderer>().enabled = true;
-        isDead = false; 
+        isDead = false;
+        transform.position = new Vector3(0, 0, 0);
+        transform.rotation = Quaternion.identity;
+        GetComponent<Rigidbody>().velocity = new Vector3(0, 0, 0);
+        GetComponent<Rigidbody>().angularVelocity = new Vector3(0, 0, 0);
     }
 
     void FixedUpdate()
