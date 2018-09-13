@@ -33,5 +33,6 @@ public class AlienBoltController : MonoBehaviour {
         }
 
         isActive = false;
+        GetComponent<Rigidbody>().useGravity = true;
     }
 }

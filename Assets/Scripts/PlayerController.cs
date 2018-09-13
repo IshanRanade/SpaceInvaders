@@ -91,7 +91,6 @@ public class PlayerController : MonoBehaviour {
 
         if (Input.GetKey(shootKey) && Time.time > nextFire)
         {
-            print(transform.forward);
             nextFire = Time.time + fireRate;
             GameObject newShot = Instantiate(bolt, transform.position, Quaternion.identity);
 
