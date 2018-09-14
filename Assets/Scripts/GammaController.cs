@@ -41,7 +41,11 @@ public abstract class GammaController : MonoBehaviour {
         alienBoltSound = GameObject.Find("AlienBoltSound").GetComponent<AudioSource>();
 
         plasmaExplosion = Resources.Load<GameObject>("Prefab/PlasmaExplosionEffect");
-            
+
+        // Make the player not interact with buffer and back wall
+        Physics.IgnoreCollision(GameObject.Find("Buffer").GetComponent<Collider>(), player.GetComponent<Collider>());
+        Physics.IgnoreCollision(GameObject.Find("BackWall").GetComponent<Collider>(), player.GetComponent<Collider>());
+
         SetSpecificValues();
     }
 

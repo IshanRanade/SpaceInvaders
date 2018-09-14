@@ -28,6 +28,7 @@ TagManager:
   - BackWall
   - Cube
   - Capsule
+  - Buffer
   layers:
   - Default
   - TransparentFX

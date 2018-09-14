@@ -114,9 +114,11 @@ public class PlayerController : MonoBehaviour {
         // Clamp the player position to be inside the boundary
         GameObject boundary = GameObject.Find("Boundary");
 
+        float maxX = 20;
+        float minX = -20;
         float margin = 1;
         rigidbody.position = new Vector3(
-            Mathf.Clamp(rigidbody.position.x, -0.5f * boundary.transform.localScale.x + margin, 0.5f * boundary.transform.localScale.x - margin),
+            Mathf.Clamp(rigidbody.position.x, minX, maxX),
             0.0f,
             0.0f
         );
