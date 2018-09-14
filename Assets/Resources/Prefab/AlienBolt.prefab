@@ -23,7 +23,7 @@ GameObject:
   - component: {fileID: 23213165242590492}
   - component: {fileID: 136308633926429212}
   - component: {fileID: 54460492049927126}
-  - component: {fileID: 114833119605838656}
+  - component: {fileID: 114541140746771948}
   m_Layer: 0
   m_Name: AlienBolt
   m_TagString: AlienBolt
@@ -101,7 +101,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 4
   m_CollisionDetection: 2
---- !u!114 &114833119605838656
+--- !u!114 &114541140746771948
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
@@ -109,9 +109,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1550707891101106}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cbb8f64b5b793b64aa42165db0202844, type: 3}
+  m_Script: {fileID: 11500000, guid: b13404fc6c6bf6b4bbb0aa1ce2dc173c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isAlive: 0
 --- !u!136 &136308633926429212
 CapsuleCollider:
   m_ObjectHideFlags: 1

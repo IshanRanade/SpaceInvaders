@@ -26,10 +26,12 @@ public class GameController : MonoBehaviour {
     public bool resetting;
     bool spawningWave;
 
+    public float minX;
+    public float maxX;
+
     // Use this for initialization
     void Start()
     {
-
         alien1 = Resources.Load<GameObject>("GammaZoids/Prefabs/GammaZoid");
         alien2 = Resources.Load<GameObject>("GammaZoids/Prefabs/GammaRidged");
         alien3 = Resources.Load<GameObject>("GammaZoids/Prefabs/GammaBulky");
@@ -41,6 +43,8 @@ public class GameController : MonoBehaviour {
         scoreText = GameObject.Find("ScoreText");
 
         Physics.IgnoreCollision(player.GetComponent<Collider>(), backWall.GetComponent<Collider>());
+        Physics.IgnoreCollision(player.GetComponent<Collider>(), GameObject.Find("Buffer").GetComponent<Collider>());
+
         Physics.gravity = new Vector3(0, 0, -9.8f);
 
         score = 0;
@@ -49,6 +53,9 @@ public class GameController : MonoBehaviour {
         spawningWave = false;
         resetting = false;
 
+        minX = -20;
+        maxX = 20;
+
         waveText.SetActive(false);
     }
 
@@ -56,20 +63,20 @@ public class GameController : MonoBehaviour {
     {
         spawningWave = true;
 
-        int x = -20;
-        int z = 20;
+        float x = minX;
+        float z = maxX;
         for (int i = 0; i < 5; i++)
         {
             for(int j = 0; j < 5; j ++)
             {
-                
-                GameObject alien = Instantiate(alien1, new Vector3(x, 0, z), Quaternion.identity);
+
+                GameObject alien = createGamma(new Vector3(x, 0, z), Quaternion.identity, "GammaZoid");
                 if(z == 20)
                 {
-                    alien.GetComponent<GammaZoidController>().canShoot = true;
+                    alien.GetComponent<GammaController>().canShoot = true;
                 } else
                 {
-                    alien.GetComponent<GammaZoidController>().canShoot = false;
+                    alien.GetComponent<GammaController>().canShoot = false;
                 }
 
                 currentNumAliens++;
@@ -145,6 +152,47 @@ public class GameController : MonoBehaviour {
     private void HideWaveText()
     {
         waveText.SetActive(false);
+    }
+
+    private GameObject createGamma(Vector3 position, Quaternion rotation, string name)
+    {
+        GameObject alien;
+        if(name == "GammaZoid")
+        {
+            alien = Instantiate(alien1, position, rotation);
+
+            alien.GetComponent<GammaController>().scorePoints = 1;
+            alien.GetComponent<GammaController>().alienBoltSpeed = 35f;
+            alien.GetComponent<GammaController>().health = 5;
+            alien.GetComponent<GammaController>().flashColor = new Color(240.0f / 255.0f, 141.0f / 255.0f, 141.0f / 255.0f);
+            alien.GetComponent<GammaController>().nextShotPeriod = 2.0f;
+        }
+        else if(name == "GammaRidged")
+        {
+            alien = Instantiate(alien2, position, Quaternion.identity);
+
+            alien.GetComponent<GammaController>().scorePoints = 1;
+            alien.GetComponent<GammaController>().alienBoltSpeed = 35f;
+            alien.GetComponent<GammaController>().health = 5;
+            alien.GetComponent<GammaController>().flashColor = new Color(240.0f / 255.0f, 141.0f / 255.0f, 141.0f / 255.0f);
+            alien.GetComponent<GammaController>().nextShotPeriod = 2.0f;
+        }
+        else if(name == "GammaBulky")
+        {
+            alien = Instantiate(alien3, position, Quaternion.identity);
+
+            alien.GetComponent<GammaController>().scorePoints = 1;
+            alien.GetComponent<GammaController>().alienBoltSpeed = 35f;
+            alien.GetComponent<GammaController>().health = 5;
+            alien.GetComponent<GammaController>().flashColor = new Color(240.0f / 255.0f, 141.0f / 255.0f, 141.0f / 255.0f);
+            alien.GetComponent<GammaController>().nextShotPeriod = 2.0f;
+        }
+        else
+        {
+            throw new System.ArgumentException("Not a real gamma zoid name");
+        }
+        
+        return alien;
     }
 
 }

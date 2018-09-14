@@ -4,27 +4,37 @@ using UnityEngine;
 using System.Linq;
 
 public class BoltController : MonoBehaviour {
+
+    public bool isAlive;
+    private GameObject player;
+
+    void Start()
+    {
+        isAlive = true;
+        player = GameObject.Find("Player");
+    }
 	
 	// Update is called once per frame
 	void Update () {
         // Delete the bolt when it goes too far
-        if (GetComponent<Rigidbody>().position.z > 0.5 * GameObject.Find("Boundary").transform.localScale.z * 8)
+        if (GetComponent<Rigidbody>().position.z < -20 || GetComponent<Rigidbody>().position.z > 200)
         {
             Destroy(gameObject);
         }
     }
 
-    void OnTriggerEnter(Collider collider)
+    void OnCollisionEnter(Collision collision)
     {
-        if (collider.gameObject.tag == "Player")
+        if(tag == "Bolt")
         {
-           Physics.IgnoreCollision(collider.gameObject.GetComponent<Collider>(), GetComponent<Collider>());
+            print(collision.gameObject.tag);
+        }
+        if(collision.gameObject.tag == "Player" && isAlive)
+        {
+            player.GetComponent<PlayerController>().GotHit();
         }
 
-        string[] tags = { "GammaZoid", "GammaRidged", "GammaBulky" };
-        if (tags.Contains(collider.gameObject.tag))
-        {
-            Destroy(gameObject);
-        }
+        isAlive = false;
+        GetComponent<Rigidbody>().useGravity = true;
     }
 }

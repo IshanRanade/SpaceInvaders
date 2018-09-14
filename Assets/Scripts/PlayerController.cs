@@ -97,7 +97,7 @@ public class PlayerController : MonoBehaviour {
             newShot.transform.forward = transform.forward;
             newShot.transform.rotation *= Quaternion.Euler(90, 0, 0);
             
-            newShot.transform.position += transform.rotation * new Vector3(0, 0, 2.0f);
+            newShot.transform.position += transform.rotation * new Vector3(0, 0, 2.3f);
 
             Rigidbody boltRigidbody = newShot.GetComponent<Rigidbody>();
             Vector3 vel = transform.forward;
@@ -112,16 +112,7 @@ public class PlayerController : MonoBehaviour {
         rigidbody.velocity = new Vector3(speed * xMovement, 0, 0);
         
         // Clamp the player position to be inside the boundary
-        GameObject boundary = GameObject.Find("Boundary");
-
-        float maxX = 20;
-        float minX = -20;
-        float margin = 1;
-        rigidbody.position = new Vector3(
-            Mathf.Clamp(rigidbody.position.x, minX, maxX),
-            0.0f,
-            0.0f
-        );
+        rigidbody.position = new Vector3(Mathf.Clamp(rigidbody.position.x, gameController.minX, gameController.maxX), 0.0f, 0.0f);
 
         // Make the ship bank in the right direction
         float maxRotation = 35;

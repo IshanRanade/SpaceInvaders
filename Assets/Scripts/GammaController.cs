@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 
-public abstract class GammaController : MonoBehaviour {
-
+public class GammaController : MonoBehaviour
+{
     protected GameObject player;
     protected GameController gameController;
 
@@ -13,15 +13,15 @@ public abstract class GammaController : MonoBehaviour {
 
     protected GameObject plasmaExplosion;
     protected GameObject alienBolt;
-    
-    protected Color flashColor;
+
+    public Color flashColor;
     protected Color originalColor;
-    
-    protected float nextShotTime;
-    protected float nextShotPeriod;
-    protected int health;
-    protected float alienBoltSpeed;
-    protected float scorePoints;
+
+    private float nextShotTime;
+    public float nextShotPeriod;
+    public int health;
+    public float alienBoltSpeed;
+    public float scorePoints;
 
     protected float createdTime;
 
@@ -32,7 +32,7 @@ public abstract class GammaController : MonoBehaviour {
         alienBolt = Resources.Load<GameObject>("Prefab/AlienBolt");
         player = GameObject.Find("Player");
         gameController = GameObject.Find("GameController").GetComponent<GameController>();
-        
+
         originalColor = GetComponent<Renderer>().material.color;
         createdTime = Time.time;
         nextShotTime = createdTime;
@@ -45,15 +45,12 @@ public abstract class GammaController : MonoBehaviour {
         // Make the player not interact with buffer and back wall
         Physics.IgnoreCollision(GameObject.Find("Buffer").GetComponent<Collider>(), player.GetComponent<Collider>());
         Physics.IgnoreCollision(GameObject.Find("BackWall").GetComponent<Collider>(), player.GetComponent<Collider>());
-
-        SetSpecificValues();
     }
-
-    public abstract void SetSpecificValues();
 
     protected void Shoot()
     {
-        if(Time.time > nextShotTime)
+        print(nextShotPeriod);
+        if (Time.time > nextShotTime)
         {
             nextShotTime += nextShotPeriod;
 
@@ -78,9 +75,9 @@ public abstract class GammaController : MonoBehaviour {
         }
     }
 
-    void OnTriggerEnter(Collider collider)
+    void OnCollisionEnter(Collision collision)
     {
-        if (collider.gameObject.tag == "Bolt")
+        if (collision.gameObject.tag == "Bolt")
         {
             health--;
 
@@ -108,9 +105,9 @@ public abstract class GammaController : MonoBehaviour {
         else
         {
             string[] tags = { "GammaZoid", "GammaRidged", "GammaBulky", "AlienBolt", "Bolt", "Boundary" };
-            if (tags.Contains(collider.gameObject.tag))
+            if (tags.Contains(collision.gameObject.tag))
             {
-                Physics.IgnoreCollision(collider.gameObject.GetComponent<Collider>(), GetComponent<Collider>());
+                Physics.IgnoreCollision(collision.gameObject.GetComponent<Collider>(), GetComponent<Collider>());
             }
         }
     }
