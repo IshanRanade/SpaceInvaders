@@ -130,7 +130,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 10
-  fireRate: 0.8
+  fireRate: 0.3
   boltSpeed: 15
   health: 0
   maxHealth: 0
@@ -155,7 +155,7 @@ Rigidbody:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 44857107}
   serializedVersion: 2
-  m_Mass: 30
+  m_Mass: 4
   m_Drag: 0
   m_AngularDrag: 3
   m_UseGravity: 0
