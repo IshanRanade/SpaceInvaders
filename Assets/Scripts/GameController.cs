@@ -9,6 +9,8 @@ public class GameController : MonoBehaviour {
     private GameObject alien1;
     private GameObject alien2;
     private GameObject alien3;
+    private GameObject alien4;
+
 
     private GameObject player;
     private GameObject boundary;
@@ -34,12 +36,16 @@ public class GameController : MonoBehaviour {
     public float distanceZ;
     public float alienSpeed;
 
+    private float lastResourceTime;
+    private float resourceSpawnPeriod;
+
     // Use this for initialization
     void Start()
     {
         alien1 = Resources.Load<GameObject>("GammaZoids/Prefabs/GammaZoid");
         alien2 = Resources.Load<GameObject>("GammaZoids/Prefabs/GammaRidged");
         alien3 = Resources.Load<GameObject>("GammaZoids/Prefabs/GammaBulky");
+        alien4 = Resources.Load<GameObject>("GammaZoids/Prefabs/GammaSmall");
         backWall = GameObject.Find("BackWall");
         player = GameObject.Find("Player");
         boundary = GameObject.Find("Boundary");
@@ -62,10 +68,13 @@ public class GameController : MonoBehaviour {
         maxX = 25;
 
         startX = -20;
-        startZ = 20;
+        startZ = 30;
 
         distanceX = 20;
-        distanceZ = 5;
+        distanceZ = 2;
+
+        lastResourceTime = 0;
+        resourceSpawnPeriod = 15.0f;
 
         waveText.SetActive(false);
     }
@@ -104,11 +113,11 @@ public class GameController : MonoBehaviour {
 
                 currentNumAliens++;
 
-                x += 3;
+                x += 4;
             }
 
-            z += 4;
-            x = -20;
+            z -= 4;
+            x = startX;
         }
 
         spawningWave = false;
@@ -147,6 +156,16 @@ public class GameController : MonoBehaviour {
             SpawnWave();
             Invoke("HideWaveText", 1);
         }
+
+        // Spawn a resource alien every thirty seconds
+        if (!gameIsOver)
+        {
+            if (Time.time > lastResourceTime + resourceSpawnPeriod)
+            {
+                lastResourceTime += resourceSpawnPeriod;
+                Instantiate(alien4, new Vector3(startX - 5, 0, startZ + 5), Quaternion.identity);
+            }
+        }
     }
 
     void ResetGame()
@@ -170,6 +189,7 @@ public class GameController : MonoBehaviour {
         spawningWave = false;
         score = 0;
         resetting = false;
+        lastResourceTime = Time.time;
     }
 
     private void HideWaveText()
