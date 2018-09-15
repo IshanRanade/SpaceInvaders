@@ -26,6 +26,10 @@ public class GammaController : MonoBehaviour
     protected float createdTime;
 
     public bool canShoot;
+    public float distanceX;
+    public float distanceZ;
+    private Vector3 target;
+    private int tracker;
 
     void Start()
     {
@@ -35,7 +39,7 @@ public class GammaController : MonoBehaviour
 
         originalColor = GetComponent<Renderer>().material.color;
         createdTime = Time.time;
-        nextShotTime = createdTime;
+        nextShotTime = createdTime + 2.0f;
 
         plasmaExplosionSound = GameObject.Find("PlasmaExplosionSound").GetComponent<AudioSource>();
         alienBoltSound = GameObject.Find("AlienBoltSound").GetComponent<AudioSource>();
@@ -45,11 +49,16 @@ public class GammaController : MonoBehaviour
         // Make the player not interact with buffer and back wall
         Physics.IgnoreCollision(GameObject.Find("Buffer").GetComponent<Collider>(), player.GetComponent<Collider>());
         Physics.IgnoreCollision(GameObject.Find("BackWall").GetComponent<Collider>(), player.GetComponent<Collider>());
+
+        distanceX = gameController.distanceX;
+        distanceZ = gameController.distanceZ;
+        
+        tracker = 0;
+        target = new Vector3(transform.position.x + distanceX, 0, transform.position.z);
     }
 
     protected void Shoot()
     {
-        print(nextShotPeriod);
         if (Time.time > nextShotTime)
         {
             nextShotTime += nextShotPeriod;
@@ -67,48 +76,70 @@ public class GammaController : MonoBehaviour
         }
     }
 
-    void Update()
+    void FixedUpdate()
     {
         if (canShoot)
         {
             Shoot();
         }
+
+        MoveSelf();
     }
 
-    void OnCollisionEnter(Collision collision)
+    private void MoveSelf()
     {
-        if (collision.gameObject.tag == "Bolt")
+        float speed = gameController.alienSpeed * Time.deltaTime;
+        float step = speed * Time.deltaTime;
+
+        if (target == transform.position)
         {
-            health--;
-
-            if (health == 0)
+            if (tracker == 0)
             {
-                GameObject newExplosion = Instantiate(plasmaExplosion, gameObject.transform.position, Quaternion.identity);
-                float time = newExplosion.GetComponent<ParticleSystem>().main.duration;
-                Destroy(newExplosion, time);
-                Destroy(gameObject);
-
-                gameController.UpdateScore(scorePoints);
-                gameController.currentNumAliens--;
-
-                plasmaExplosionSound.GetComponent<AudioSource>().Play();
+                target = new Vector3(transform.position.x, 0, transform.position.z - distanceZ);
+            }
+            else if (tracker == 1)
+            {
+                target = new Vector3(transform.position.x - distanceX, 0, transform.position.z);
+            }
+            else if (tracker == 2)
+            {
+                target = new Vector3(transform.position.x, 0, transform.position.z - distanceZ);
             }
             else
             {
-                foreach (Material mat in GetComponent<Renderer>().materials)
-                {
-                    GetComponent<Renderer>().material.SetColor("_Color", flashColor);
-                }
-                Invoke("ResetColor", 0.3f);
+                target = new Vector3(transform.position.x + distanceX, 0, transform.position.z);
             }
+
+            tracker = (tracker + 1) % 4;
+        }
+
+        transform.position = Vector3.MoveTowards(transform.position, target, step);
+    }
+
+
+    public void GotHit()
+    {
+        health = Mathf.Max(health-1, 0);
+
+        if (health <= 0)
+        {
+            GameObject newExplosion = Instantiate(plasmaExplosion, gameObject.transform.position, Quaternion.identity);
+            float time = newExplosion.GetComponent<ParticleSystem>().main.duration;
+            Destroy(newExplosion, time);
+            Destroy(gameObject);
+
+            gameController.UpdateScore(scorePoints);
+            gameController.currentNumAliens--;
+
+            plasmaExplosionSound.GetComponent<AudioSource>().Play();
         }
         else
         {
-            string[] tags = { "GammaZoid", "GammaRidged", "GammaBulky", "AlienBolt", "Bolt", "Boundary" };
-            if (tags.Contains(collision.gameObject.tag))
+            foreach (Material mat in GetComponent<Renderer>().materials)
             {
-                Physics.IgnoreCollision(collision.gameObject.GetComponent<Collider>(), GetComponent<Collider>());
+                GetComponent<Renderer>().material.SetColor("_Color", flashColor);
             }
+            Invoke("ResetColor", 0.3f);
         }
     }
 

@@ -129,9 +129,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0045f8c31bb0ce34fa80556ab0b2a0e8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 5
+  speed: 10
   fireRate: 0.8
-  boltSpeed: 10
+  boltSpeed: 15
   health: 0
   maxHealth: 0
 --- !u!64 &44857109
@@ -1586,6 +1586,11 @@ MonoBehaviour:
   resetting: 0
   minX: 0
   maxX: 0
+  startX: 0
+  startZ: 0
+  distanceX: 0
+  distanceZ: 0
+  alienSpeed: 0
 --- !u!1 &1855415385
 GameObject:
   m_ObjectHideFlags: 0

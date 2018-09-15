@@ -25,13 +25,15 @@ public class BoltController : MonoBehaviour {
 
     void OnCollisionEnter(Collision collision)
     {
-        if(tag == "Bolt")
-        {
-            print(collision.gameObject.tag);
-        }
         if(collision.gameObject.tag == "Player" && isAlive)
         {
             player.GetComponent<PlayerController>().GotHit();
+        }
+
+        string[] tags = { "GammaZoid", "GammaRidged", "GammaBulky" };
+        if (tags.Contains(collision.gameObject.tag) && isAlive)
+        {
+            collision.gameObject.GetComponent<GammaController>().GotHit();
         }
 
         isAlive = false;

@@ -28,6 +28,11 @@ public class GameController : MonoBehaviour {
 
     public float minX;
     public float maxX;
+    public float startX;
+    public float startZ;
+    public float distanceX;
+    public float distanceZ;
+    public float alienSpeed;
 
     // Use this for initialization
     void Start()
@@ -53,8 +58,14 @@ public class GameController : MonoBehaviour {
         spawningWave = false;
         resetting = false;
 
-        minX = -20;
-        maxX = 20;
+        minX = -25;
+        maxX = 25;
+
+        startX = -20;
+        startZ = 20;
+
+        distanceX = 20;
+        distanceZ = 5;
 
         waveText.SetActive(false);
     }
@@ -63,14 +74,17 @@ public class GameController : MonoBehaviour {
     {
         spawningWave = true;
 
-        float x = minX;
-        float z = maxX;
+        alienSpeed = 100.0f;
+
+        float x = startX;
+        float z = startZ;
         for (int i = 0; i < 5; i++)
         {
             for(int j = 0; j < 5; j ++)
             {
 
                 GameObject alien = createGamma(new Vector3(x, 0, z), Quaternion.identity, "GammaZoid");
+
                 if(z == 20)
                 {
                     alien.GetComponent<GammaController>().canShoot = true;
@@ -97,7 +111,7 @@ public class GameController : MonoBehaviour {
         score += scorePoints;
     }
 
-    void Update()
+    void FixedUpdate()
     {
         if (Input.GetKey(KeyCode.Escape))
         {
@@ -162,8 +176,8 @@ public class GameController : MonoBehaviour {
             alien = Instantiate(alien1, position, rotation);
 
             alien.GetComponent<GammaController>().scorePoints = 1;
-            alien.GetComponent<GammaController>().alienBoltSpeed = 35f;
-            alien.GetComponent<GammaController>().health = 5;
+            alien.GetComponent<GammaController>().alienBoltSpeed = 10f;
+            alien.GetComponent<GammaController>().health = 1;
             alien.GetComponent<GammaController>().flashColor = new Color(240.0f / 255.0f, 141.0f / 255.0f, 141.0f / 255.0f);
             alien.GetComponent<GammaController>().nextShotPeriod = 2.0f;
         }
@@ -191,7 +205,7 @@ public class GameController : MonoBehaviour {
         {
             throw new System.ArgumentException("Not a real gamma zoid name");
         }
-        
+
         return alien;
     }
 
