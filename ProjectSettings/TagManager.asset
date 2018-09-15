@@ -29,6 +29,7 @@ TagManager:
   - Cube
   - Capsule
   - Buffer
+  - Debris
   layers:
   - Default
   - TransparentFX

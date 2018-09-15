@@ -13,6 +13,7 @@ public class GammaController : MonoBehaviour
 
     protected GameObject plasmaExplosion;
     protected GameObject alienBolt;
+    protected GameObject debris;
 
     public Color flashColor;
     protected Color originalColor;
@@ -34,6 +35,8 @@ public class GammaController : MonoBehaviour
     void Start()
     {
         alienBolt = Resources.Load<GameObject>("Prefab/AlienBolt");
+        debris = Resources.Load<GameObject>("Prefab/Debris");
+
         player = GameObject.Find("Player");
         gameController = GameObject.Find("GameController").GetComponent<GameController>();
 
@@ -123,6 +126,7 @@ public class GammaController : MonoBehaviour
 
         if (health <= 0)
         {
+            GameObject newDebris = Instantiate(debris, transform.position, Quaternion.identity);
             GameObject newExplosion = Instantiate(plasmaExplosion, gameObject.transform.position, Quaternion.identity);
             float time = newExplosion.GetComponent<ParticleSystem>().main.duration;
             Destroy(newExplosion, time);

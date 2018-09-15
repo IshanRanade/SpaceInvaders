@@ -144,7 +144,7 @@ public class GameController : MonoBehaviour {
     {
         resetting = true;
 
-        string[] tags = { "AlienBolt", "Bolt", "GammaZoid", "GammaRidged", "GammaBulky", "PlasmaExplosionEffect", "BigExplosionEffect" };
+        string[] tags = { "AlienBolt", "Bolt", "GammaZoid", "GammaRidged", "GammaBulky", "PlasmaExplosionEffect", "BigExplosionEffect", "Debris" };
 
         foreach (string tag in tags) {
             foreach (GameObject o in GameObject.FindGameObjectsWithTag(tag))
