@@ -39,6 +39,8 @@ public class GameController : MonoBehaviour {
     private float lastResourceTime;
     private float resourceSpawnPeriod;
 
+    private List<List<GameObject>> columns;
+
     // Use this for initialization
     void Start()
     {
@@ -76,6 +78,8 @@ public class GameController : MonoBehaviour {
         lastResourceTime = 0;
         resourceSpawnPeriod = 15.0f;
 
+        columns = new List<List<GameObject>>();
+
         waveText.SetActive(false);
     }
 
@@ -89,9 +93,10 @@ public class GameController : MonoBehaviour {
         float z = startZ;
         for (int i = 0; i < 5; i++)
         {
+            columns.Add(new List<GameObject>());
+
             for(int j = 0; j < 5; j ++)
             {
-
                 string alienType;
                 if(Random.value < 0.5)
                 {
@@ -103,6 +108,8 @@ public class GameController : MonoBehaviour {
 
                 GameObject alien = createGamma(new Vector3(x, 0, z), Quaternion.identity, alienType);
 
+                columns[i].Insert(0, alien);
+
                 if(z == 20)
                 {
                     alien.GetComponent<GammaController>().canShoot = true;
@@ -113,11 +120,11 @@ public class GameController : MonoBehaviour {
 
                 currentNumAliens++;
 
-                x += 4;
+                z -= 4;
             }
 
-            z -= 4;
-            x = startX;
+            x += 4;
+            z = startZ;
         }
 
         spawningWave = false;
@@ -164,6 +171,34 @@ public class GameController : MonoBehaviour {
             {
                 lastResourceTime += resourceSpawnPeriod;
                 Instantiate(alien4, new Vector3(startX - 5, 0, startZ + 5), Quaternion.identity);
+            }
+        }
+
+        foreach(List<GameObject> column in columns)
+        {
+            if(column.Count > 0)
+            {
+                if(!column[0].GetComponent<GammaController>().canShoot)
+                {
+                    column[0].GetComponent<GammaController>().canShoot = true;
+                    column[0].GetComponent<GammaController>().nextShotTime = Time.time;
+                }
+                
+            }
+        }
+    }
+
+    public void AlienDied(GameObject alien)
+    {
+        foreach(List<GameObject> column in columns)
+        {
+            foreach(GameObject obj in column)
+            {
+                if(obj == alien)
+                {
+                    column.Remove(alien);
+                    return;
+                }
             }
         }
     }

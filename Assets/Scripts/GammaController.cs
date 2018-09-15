@@ -18,7 +18,7 @@ public class GammaController : MonoBehaviour
     public Color flashColor;
     protected Color originalColor;
 
-    private float nextShotTime;
+    public float nextShotTime;
     public float nextShotPeriod;
     public int health;
     public float alienBoltSpeed;
@@ -129,6 +129,9 @@ public class GammaController : MonoBehaviour
             GameObject newDebris = Instantiate(debris, transform.position, Quaternion.identity);
             GameObject newExplosion = Instantiate(plasmaExplosion, gameObject.transform.position, Quaternion.identity);
             float time = newExplosion.GetComponent<ParticleSystem>().main.duration;
+
+            gameController.AlienDied(gameObject);
+
             Destroy(newExplosion, time);
             Destroy(gameObject);
 
