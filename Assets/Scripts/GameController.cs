@@ -83,7 +83,16 @@ public class GameController : MonoBehaviour {
             for(int j = 0; j < 5; j ++)
             {
 
-                GameObject alien = createGamma(new Vector3(x, 0, z), Quaternion.identity, "GammaZoid");
+                string alienType;
+                if(Random.value < 0.5)
+                {
+                    alienType = "GammaZoid";
+                } else
+                {
+                    alienType = "GammaRidged";
+                }
+
+                GameObject alien = createGamma(new Vector3(x, 0, z), Quaternion.identity, alienType);
 
                 if(z == 20)
                 {
@@ -176,30 +185,30 @@ public class GameController : MonoBehaviour {
             alien = Instantiate(alien1, position, rotation);
 
             alien.GetComponent<GammaController>().scorePoints = 1;
-            alien.GetComponent<GammaController>().alienBoltSpeed = 10f;
+            alien.GetComponent<GammaController>().alienBoltSpeed = 5f;
             alien.GetComponent<GammaController>().health = 1;
             alien.GetComponent<GammaController>().flashColor = new Color(240.0f / 255.0f, 141.0f / 255.0f, 141.0f / 255.0f);
             alien.GetComponent<GammaController>().nextShotPeriod = 2.0f;
         }
         else if(name == "GammaRidged")
         {
-            alien = Instantiate(alien2, position, Quaternion.identity);
+            alien = Instantiate(alien2, position, rotation);
 
-            alien.GetComponent<GammaController>().scorePoints = 1;
-            alien.GetComponent<GammaController>().alienBoltSpeed = 35f;
-            alien.GetComponent<GammaController>().health = 5;
+            alien.GetComponent<GammaController>().scorePoints = 5;
+            alien.GetComponent<GammaController>().alienBoltSpeed = 10f;
+            alien.GetComponent<GammaController>().health = 2;
             alien.GetComponent<GammaController>().flashColor = new Color(240.0f / 255.0f, 141.0f / 255.0f, 141.0f / 255.0f);
-            alien.GetComponent<GammaController>().nextShotPeriod = 2.0f;
+            alien.GetComponent<GammaController>().nextShotPeriod = 2.5f;
         }
         else if(name == "GammaBulky")
         {
             alien = Instantiate(alien3, position, Quaternion.identity);
 
-            alien.GetComponent<GammaController>().scorePoints = 1;
-            alien.GetComponent<GammaController>().alienBoltSpeed = 35f;
-            alien.GetComponent<GammaController>().health = 5;
+            alien.GetComponent<GammaController>().scorePoints = 10;
+            alien.GetComponent<GammaController>().alienBoltSpeed = 15f;
+            alien.GetComponent<GammaController>().health = 3;
             alien.GetComponent<GammaController>().flashColor = new Color(240.0f / 255.0f, 141.0f / 255.0f, 141.0f / 255.0f);
-            alien.GetComponent<GammaController>().nextShotPeriod = 2.0f;
+            alien.GetComponent<GammaController>().nextShotPeriod = 3.0f;
         }
         else
         {
