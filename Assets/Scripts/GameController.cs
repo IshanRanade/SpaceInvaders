@@ -11,6 +11,7 @@ public class GameController : MonoBehaviour {
     private GameObject alien3;
     private GameObject alien4;
 
+    private GameObject resourceEffect;
 
     private GameObject player;
     private GameObject boundary;
@@ -48,6 +49,7 @@ public class GameController : MonoBehaviour {
         alien2 = Resources.Load<GameObject>("GammaZoids/Prefabs/GammaRidged");
         alien3 = Resources.Load<GameObject>("GammaZoids/Prefabs/GammaBulky");
         alien4 = Resources.Load<GameObject>("GammaZoids/Prefabs/GammaSmall");
+        resourceEffect = Resources.Load<GameObject>("Prefab/ResourceEffect");
         backWall = GameObject.Find("BackWall");
         player = GameObject.Find("Player");
         boundary = GameObject.Find("Boundary");
@@ -91,32 +93,18 @@ public class GameController : MonoBehaviour {
 
         float x = startX;
         float z = startZ;
-        for (int i = 0; i < 5; i++)
+        for (int i = 0; i < 2; i++)
         {
             columns.Add(new List<GameObject>());
 
-            for(int j = 0; j < 5; j ++)
+            for(int j = 0; j < 2; j ++)
             {
-                string alienType;
-                if(Random.value < 0.5)
-                {
-                    alienType = "GammaZoid";
-                } else
-                {
-                    alienType = "GammaRidged";
-                }
+                // Make an effect to show them spawning
+                GameObject newEffect = Instantiate(resourceEffect, new Vector3(x, 0, z), Quaternion.identity);
+                Destroy(newEffect, 1.0f);
 
-                GameObject alien = createGamma(new Vector3(x, 0, z), Quaternion.identity, alienType);
-
-                columns[i].Insert(0, alien);
-
-                if(z == 20)
-                {
-                    alien.GetComponent<GammaController>().canShoot = true;
-                } else
-                {
-                    alien.GetComponent<GammaController>().canShoot = false;
-                }
+                // Create an alien
+                StartCoroutine(CreateAlien(i, x, z));
 
                 currentNumAliens++;
 
@@ -129,6 +117,25 @@ public class GameController : MonoBehaviour {
 
         spawningWave = false;
         currentWave++;
+    }
+
+    private IEnumerator CreateAlien(int i, float x, float z)
+    {
+        yield return new WaitForSeconds(1.0f);
+
+        string alienType;
+        if (Random.value < 0.5)
+        {
+            alienType = "GammaZoid";
+        }
+        else
+        {
+            alienType = "GammaRidged";
+        }
+
+        GameObject alien = createGamma(new Vector3(x, 0, z), Quaternion.identity, alienType);
+
+        columns[i].Insert(0, alien);
     }
 
     public void UpdateScore(float scorePoints)
