@@ -92,6 +92,11 @@ public class GammaController : MonoBehaviour
         }
 
         MoveSelf();
+
+        if(transform.position.z <= 0)
+        {
+            gameController.gameIsOver = true;
+        }
     }
 
     private void MoveSelf()

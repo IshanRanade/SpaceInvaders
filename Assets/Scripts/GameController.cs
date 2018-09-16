@@ -20,6 +20,7 @@ public class GameController : MonoBehaviour {
     private GameObject waveText;
     private GameObject scoreText;
     private GameObject playerHealthText;
+    private GameObject gameOverText;
 
     public int currentNumAliens;
     public int currentWave;
@@ -60,6 +61,7 @@ public class GameController : MonoBehaviour {
         boundary = GameObject.Find("Boundary");
         waveText = GameObject.Find("WaveText");
         playerHealthText = GameObject.Find("PlayerHealthText");
+        gameOverText = GameObject.Find("GameOverText");
         scoreText = GameObject.Find("ScoreText");
 
         Physics.IgnoreCollision(player.GetComponent<Collider>(), backWall.GetComponent<Collider>());
@@ -88,6 +90,7 @@ public class GameController : MonoBehaviour {
         columns = new List<List<GameObject>>();
 
         waveText.SetActive(false);
+        gameOverText.SetActive(false);
 
         resourceTimePeriod = 10.0f;
         resourceAcquired = false;
@@ -161,6 +164,11 @@ public class GameController : MonoBehaviour {
         if(Input.GetKeyDown(KeyCode.R) && !resetting)
         {
             ResetGame();
+        }
+
+        if(gameIsOver)
+        {
+            gameOverText.SetActive(true);
         }
 
         if (resetting || gameIsOver)
@@ -246,6 +254,7 @@ public class GameController : MonoBehaviour {
         resetting = false;
         lastResourceTime = Time.time;
         columns = new List<List<GameObject>>();
+        gameOverText.SetActive(false);
     }
 
     private void HideWaveText()

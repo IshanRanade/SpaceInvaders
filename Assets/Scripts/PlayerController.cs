@@ -37,7 +37,7 @@ public class PlayerController : MonoBehaviour {
         originalColor = gameObject.GetComponent<Renderer>().material.color;
 
         nextFire = Time.time;
-        maxHealth = 5.0f;
+        maxHealth = 1.0f;
         health = maxHealth;
         isDead = false;
     }

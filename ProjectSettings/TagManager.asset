@@ -32,6 +32,7 @@ TagManager:
   - Debris
   - ResourceEffect
   - GammaSmall
+  - GameOverText
   layers:
   - Default
   - TransparentFX
