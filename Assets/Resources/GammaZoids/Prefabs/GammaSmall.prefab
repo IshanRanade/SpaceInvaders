@@ -24,7 +24,7 @@ GameObject:
   - component: {fileID: 135133363714645584}
   - component: {fileID: 65650411513852646}
   - component: {fileID: 114539069722378912}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: GammaSmall
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -62,6 +62,11 @@ public class GammaController : MonoBehaviour
 
     protected void Shoot()
     {
+        if(gameController.gameIsOver)
+        {
+            return;
+        }
+
         if (Time.time > nextShotTime)
         {
             nextShotTime += nextShotPeriod;

@@ -19,13 +19,11 @@ public class CameraController : MonoBehaviour {
 	
 	// Update is called once per frame
 	void FixedUpdate () {
+        if(gameController.gameIsOver)
+        {
+            return;
+        }
         transform.position = new Vector3(player.transform.position.x, originalPosition.y, originalPosition.z);
         transform.rotation = originalRotation;
-        //if(gameController.gameIsOver)
-        //{
-        //    return;
-        //}
-
-        //gameObject.transform.position = Vector3.SmoothDamp(gameObject.transform.position, player.transform.position - new Vector3(0, -2, 5), ref velocity, 0.2f);
     }
 }

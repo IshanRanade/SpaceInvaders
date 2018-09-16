@@ -37,7 +37,7 @@ public class PlayerController : MonoBehaviour {
         originalColor = gameObject.GetComponent<Renderer>().material.color;
 
         nextFire = Time.time;
-        maxHealth = 100.0f;
+        maxHealth = 1.0f;
         health = maxHealth;
         isDead = false;
     }
@@ -138,6 +138,12 @@ public class PlayerController : MonoBehaviour {
     public void GotHit()
     {
         health = Mathf.Max(0, health - 1);
+
+        if(health == 0)
+        {
+            gameController.gameIsOver = true;
+            return;
+        }
 
         gameObject.GetComponent<Renderer>().material.SetColor("_Color", flashColor);
         Invoke("ResetColor", 0.5f);

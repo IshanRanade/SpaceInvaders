@@ -25,7 +25,7 @@ GameObject:
   - component: {fileID: 65840683010648498}
   - component: {fileID: 65587815679537034}
   - component: {fileID: 114586983182433802}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: GammaBulky
   m_TagString: GammaBulky
   m_Icon: {fileID: 0}
@@ -126,6 +126,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   flashColor: {r: 0, g: 0, b: 0, a: 0}
+  nextShotTime: 0
   nextShotPeriod: 0
   health: 0
   alienBoltSpeed: 0

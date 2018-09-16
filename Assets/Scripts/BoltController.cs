@@ -7,11 +7,18 @@ public class BoltController : MonoBehaviour {
 
     public bool isAlive;
     private GameObject player;
+    private GameController gameController;
 
     void Start()
     {
         isAlive = true;
         player = GameObject.Find("Player");
+        gameController = GameObject.Find("GameController").GetComponent<GameController>();
+
+        if(gameController.resourceAcquired && gameObject.tag == "Bolt")
+        {
+            gameObject.layer = LayerMask.NameToLayer("Resource");
+        }
     }
 	
 	// Update is called once per frame
@@ -37,6 +44,7 @@ public class BoltController : MonoBehaviour {
         }
 
         isAlive = false;
+        gameObject.layer = LayerMask.NameToLayer("Default");
         GetComponent<Rigidbody>().useGravity = true;
     }
 }

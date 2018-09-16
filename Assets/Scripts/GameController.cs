@@ -42,6 +42,10 @@ public class GameController : MonoBehaviour {
 
     private List<List<GameObject>> columns;
 
+    public float resourceTime;
+    public float resourceAcquiredTime;
+    public bool resourceAcquired;
+
     // Use this for initialization
     void Start()
     {
@@ -83,6 +87,9 @@ public class GameController : MonoBehaviour {
         columns = new List<List<GameObject>>();
 
         waveText.SetActive(false);
+
+        resourceTime = 10.0f;
+        resourceAcquired = false;
     }
 
     void SpawnWave()
@@ -150,12 +157,12 @@ public class GameController : MonoBehaviour {
             Application.Quit();
         }
 
-        if(Input.GetKey(KeyCode.R) && !resetting)
+        if(Input.GetKeyDown(KeyCode.R) && !resetting)
         {
             ResetGame();
         }
 
-        if (resetting)
+        if (resetting || gameIsOver)
         {
             return;
         }
@@ -172,15 +179,17 @@ public class GameController : MonoBehaviour {
         }
 
         // Spawn a resource alien every thirty seconds
-        if (!gameIsOver)
+        if (Time.time > lastResourceTime + resourceSpawnPeriod)
         {
-            if (Time.time > lastResourceTime + resourceSpawnPeriod)
-            {
-                lastResourceTime += resourceSpawnPeriod;
-                Instantiate(alien4, new Vector3(startX - 5, 0, startZ + 5), Quaternion.identity);
-            }
+            lastResourceTime += resourceSpawnPeriod;
+            Instantiate(alien4, new Vector3(startX - 5, 0, startZ + 5), Quaternion.identity);
         }
+        
 
+        // Turn off acquired resource if it is expired
+        //if()
+        
+        // Update which alien in a column can shoot
         foreach(List<GameObject> column in columns)
         {
             if(column.Count > 0)
@@ -232,6 +241,7 @@ public class GameController : MonoBehaviour {
         score = 0;
         resetting = false;
         lastResourceTime = Time.time;
+        columns = new List<List<GameObject>>();
     }
 
     private void HideWaveText()
@@ -278,6 +288,12 @@ public class GameController : MonoBehaviour {
         }
 
         return alien;
+    }
+
+    public void ResourceAcquired()
+    {
+        resourceAcquired = true;
+        resourceAcquiredTime = Time.time;
     }
 
 }
