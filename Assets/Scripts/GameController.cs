@@ -42,8 +42,9 @@ public class GameController : MonoBehaviour {
 
     private List<List<GameObject>> columns;
 
-    public float resourceTime;
+    public float resourceTimePeriod;
     public float resourceAcquiredTime;
+    public float resourceEndTime;
     public bool resourceAcquired;
 
     // Use this for initialization
@@ -88,7 +89,7 @@ public class GameController : MonoBehaviour {
 
         waveText.SetActive(false);
 
-        resourceTime = 10.0f;
+        resourceTimePeriod = 10.0f;
         resourceAcquired = false;
     }
 
@@ -187,7 +188,10 @@ public class GameController : MonoBehaviour {
         
 
         // Turn off acquired resource if it is expired
-        //if()
+        if(Time.time > resourceEndTime)
+        {
+            resourceAcquired = false;
+        }
         
         // Update which alien in a column can shoot
         foreach(List<GameObject> column in columns)
@@ -292,8 +296,15 @@ public class GameController : MonoBehaviour {
 
     public void ResourceAcquired()
     {
-        resourceAcquired = true;
-        resourceAcquiredTime = Time.time;
+        if(resourceAcquired)
+        {
+            resourceEndTime += resourceTimePeriod;
+        } else
+        {
+            resourceAcquired = true;
+            resourceAcquiredTime = Time.time;
+            resourceEndTime = resourceAcquiredTime + resourceTimePeriod;
+        }
     }
 
 }

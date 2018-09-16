@@ -7,11 +7,13 @@ public class ResourceGammaController : MonoBehaviour {
     Vector3 target;
     float speed;
     GameObject resourceEffect;
+    GameObject plasmaExplosion;
 
 	// Use this for initialization
 	void Start () {
         target = new Vector3(-transform.position.x, 0, transform.position.z);
         resourceEffect = Resources.Load<GameObject>("Prefab/ResourceEffect");
+        plasmaExplosion = Resources.Load<GameObject>("Prefab/PlasmaExplosionEffect");
         speed = 10.0f;
 
         DoEffect();
@@ -36,4 +38,12 @@ public class ResourceGammaController : MonoBehaviour {
             transform.position = Vector3.MoveTowards(transform.position, target, step);
         }
 	}
+
+    public void GotHit()
+    {
+        GameObject newExplosion = Instantiate(plasmaExplosion, gameObject.transform.position, Quaternion.identity);
+        float time = newExplosion.GetComponent<ParticleSystem>().main.duration;
+        Destroy(newExplosion, time);
+        Destroy(gameObject);
+    }
 }
