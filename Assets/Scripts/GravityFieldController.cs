@@ -29,10 +29,10 @@ public class GravityFieldController : MonoBehaviour {
 
             if(vertices[i].z == maxZ)
             {
-                newColor.a = 0.3f;
+                newColor.a = 0.0f;
             } else
             {
-                newColor.a = Mathf.Abs(Mathf.Sin(Time.time * 5.0f)) * 0.5f + 0.3f;
+                newColor.a = Mathf.Abs(Mathf.Sin(Time.time * 5.0f)) * 0.2f + 0.3f;
             }
 
             colors[i] = newColor;

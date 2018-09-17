@@ -33,6 +33,7 @@ TagManager:
   - ResourceEffect
   - GammaSmall
   - GameOverText
+  - Bind
   layers:
   - Default
   - TransparentFX

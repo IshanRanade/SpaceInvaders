@@ -37,7 +37,7 @@ public class PlayerController : MonoBehaviour {
         originalColor = gameObject.GetComponent<Renderer>().material.color;
 
         nextFire = Time.time;
-        maxHealth = 1.0f;
+        maxHealth = 100.0f;
         health = maxHealth;
         isDead = false;
     }
@@ -133,6 +133,14 @@ public class PlayerController : MonoBehaviour {
         }
 
         transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, 100.0f * Time.deltaTime);
+
+        // Check if the player is trapped in a bind
+        if(transform.position.x + 1.5 > gameController.bindCurrentLocation.x - gameController.bindRadius &&
+            transform.position.x - 1.5 < gameController.bindCurrentLocation.x + gameController.bindRadius &&
+            Time.time > gameController.bindCreatedTime + gameController.bindActivateTime)
+        {
+            rigidbody.velocity = new Vector3(0, 0, 0);
+        }
     }
 
     public void GotHit()

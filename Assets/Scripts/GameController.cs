@@ -48,6 +48,14 @@ public class GameController : MonoBehaviour {
     public float resourceEndTime;
     public bool resourceAcquired;
 
+    public GameObject bind;
+    public float bindRadius;
+    public float bindSpawnRate;
+    public float bindStayTime;
+    public float bindCreatedTime;
+    public float bindActivateTime;
+    public Vector3 bindCurrentLocation;
+
     // Use this for initialization
     void Start()
     {
@@ -94,6 +102,14 @@ public class GameController : MonoBehaviour {
 
         resourceTimePeriod = 10.0f;
         resourceAcquired = false;
+
+        bind = Resources.Load<GameObject>("Prefab/Bind");
+        bindRadius = bind.transform.localScale.x / 2.0f;
+        bindSpawnRate = 3.0f;
+        bindStayTime = 3.0f;
+        bindActivateTime = 1.0f;
+        bindCreatedTime = Time.time;
+        bindCurrentLocation = new Vector3(-100, -100, -100);
     }
 
     void SpawnWave()
@@ -214,6 +230,8 @@ public class GameController : MonoBehaviour {
                 
             }
         }
+
+        SpawnBind();
     }
 
     public void AlienDied(GameObject alien)
@@ -235,7 +253,7 @@ public class GameController : MonoBehaviour {
     {
         resetting = true;
 
-        string[] tags = { "AlienBolt", "Bolt", "GammaZoid", "GammaRidged", "GammaBulky", "PlasmaExplosionEffect", "BigExplosionEffect", "Debris", "GammaSmall", "ResourceEffect" };
+        string[] tags = { "AlienBolt", "Bolt", "GammaZoid", "GammaRidged", "GammaBulky", "PlasmaExplosionEffect", "BigExplosionEffect", "Debris", "GammaSmall", "ResourceEffect", "Bind" };
 
         foreach (string tag in tags) {
             foreach (GameObject o in GameObject.FindGameObjectsWithTag(tag))
@@ -255,6 +273,8 @@ public class GameController : MonoBehaviour {
         lastResourceTime = Time.time;
         columns = new List<List<GameObject>>();
         gameOverText.SetActive(false);
+        bindCreatedTime = Time.time;
+        bindCurrentLocation = new Vector3(-100, -100, -100);
     }
 
     private void HideWaveText()
@@ -313,6 +333,17 @@ public class GameController : MonoBehaviour {
             resourceAcquired = true;
             resourceAcquiredTime = Time.time;
             resourceEndTime = resourceAcquiredTime + resourceTimePeriod;
+        }
+    }
+
+    public void SpawnBind()
+    {
+        if (Time.time > bindSpawnRate + bindStayTime + bindCreatedTime)
+        {
+            bindCreatedTime = Time.time;
+            Vector3 position = new Vector3(Random.value * 32 + -16, 0, -1.05f);
+            Instantiate(bind, position, Quaternion.identity);
+            bindCurrentLocation = position;
         }
     }
 
