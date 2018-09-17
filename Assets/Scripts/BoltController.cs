@@ -49,6 +49,10 @@ public class BoltController : MonoBehaviour {
             collision.gameObject.GetComponent<ResourceGammaController>().GotHit();
         }
 
+        Renderer renderer = GetComponent<Renderer>();
+        Material mat = renderer.material;
+        mat.DisableKeyword("_EMISSION");
+
         isAlive = false;
         gameObject.layer = LayerMask.NameToLayer("Default");
         GetComponent<Rigidbody>().useGravity = true;
