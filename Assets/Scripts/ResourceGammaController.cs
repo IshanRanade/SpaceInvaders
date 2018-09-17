@@ -17,7 +17,7 @@ public class ResourceGammaController : MonoBehaviour {
         resourceEffect = Resources.Load<GameObject>("Prefab/ResourceEffect");
         plasmaExplosion = Resources.Load<GameObject>("Prefab/PlasmaExplosionEffect");
         gameController = GameObject.Find("GameController").GetComponent<GameController>();
-        speed = 10.0f;
+        speed = 7.0f;
         scorePoints = 10.0f;
 
         DoEffect();

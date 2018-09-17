@@ -21,9 +21,9 @@ GameObject:
   - component: {fileID: 4714803287163052}
   - component: {fileID: 33957706552998108}
   - component: {fileID: 23972062725016766}
-  - component: {fileID: 135662484682270712}
   - component: {fileID: 54647583758345110}
   - component: {fileID: 114062295382888812}
+  - component: {fileID: 135843043500564210}
   m_Layer: 0
   m_Name: Debris
   m_TagString: Debris
@@ -38,8 +38,8 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1887308916504420}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -6.9879236, y: 29.638208, z: -12.780049}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: -2.607, y: 0.65486, z: 2.2979}
+  m_LocalScale: {x: 0.0071448097, y: 0.0071448097, z: 0.0071448097}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -59,7 +59,7 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RenderingLayerMask: 4294967295
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 85eab779b45151c44b6e7f33f0bfe956, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -85,7 +85,7 @@ MeshFilter:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1887308916504420}
-  m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
+  m_Mesh: {fileID: 4300000, guid: 70705b6a2a6effe4faa4d1c71ea68815, type: 3}
 --- !u!54 &54647583758345110
 Rigidbody:
   m_ObjectHideFlags: 1
@@ -93,7 +93,7 @@ Rigidbody:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1887308916504420}
   serializedVersion: 2
-  m_Mass: 1
+  m_Mass: 2
   m_Drag: 0
   m_AngularDrag: 0.05
   m_UseGravity: 1
@@ -112,7 +112,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 84e3310941735014386226d5649205db, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!135 &135662484682270712
+--- !u!135 &135843043500564210
 SphereCollider:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
@@ -122,5 +122,5 @@ SphereCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.5
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Radius: 96.02307
+  m_Center: {x: -0.5720291, y: 52.537964, z: -5.5878296}

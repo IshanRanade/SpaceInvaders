@@ -106,7 +106,7 @@ public class GameController : MonoBehaviour {
 
         bind = Resources.Load<GameObject>("Prefab/Bind");
         bindRadius = bind.transform.localScale.x / 2.0f;
-        bindSpawnRate = 2.0f;
+        bindSpawnRate = 1.5f;
         bindStayTime = 3.0f;
         bindActivateTime = 1.0f;
         bindCreatedTime = Time.time;
@@ -119,7 +119,7 @@ public class GameController : MonoBehaviour {
         spawningWave = true;
 
         // Make the binds faster
-        bindSpawnRate = Mathf.Max(1.0f, 2.0f - currentWave * 0.2f);
+        bindSpawnRate = Mathf.Max(0.5f, 1.5f - currentWave * 0.2f);
         bindStayTime = 3.0f;
         bindActivateTime = 1.0f;
 
