@@ -10,6 +10,7 @@ public class PlayerController : MonoBehaviour {
     private AudioSource playerExplosionSound;
     private GameObject bigExplosionEffect;
     private GameController gameController;
+    private GameObject camera;
 
     public float speed;
     public float fireRate;
@@ -29,6 +30,7 @@ public class PlayerController : MonoBehaviour {
         playerBoltSound = GameObject.Find("PlayerBoltSound").GetComponent<AudioSource>();
         playerExplosionSound = GameObject.Find("PlayerExplosionSound").GetComponent<AudioSource>();
         bigExplosionEffect = Resources.Load<GameObject>("Prefab/BigExplosionEffect");
+        camera = GameObject.Find("Camera");
 
         gameController = GameObject.Find("GameController").GetComponent<GameController>();
         
@@ -37,7 +39,7 @@ public class PlayerController : MonoBehaviour {
         originalColor = gameObject.GetComponent<Renderer>().material.color;
 
         nextFire = Time.time;
-        maxHealth = 100.0f;
+        maxHealth = 10.0f;
         health = maxHealth;
         isDead = false;
     }
@@ -146,6 +148,8 @@ public class PlayerController : MonoBehaviour {
 
     public void GotHit()
     {
+        camera.GetComponent<CameraController>().Shake();
+
         health = Mathf.Max(0, health - 1);
 
         if(health == 0)

@@ -106,7 +106,7 @@ public class GameController : MonoBehaviour {
 
         bind = Resources.Load<GameObject>("Prefab/Bind");
         bindRadius = bind.transform.localScale.x / 2.0f;
-        bindSpawnRate = 3.0f;
+        bindSpawnRate = 2.0f;
         bindStayTime = 3.0f;
         bindActivateTime = 1.0f;
         bindCreatedTime = Time.time;
@@ -118,7 +118,12 @@ public class GameController : MonoBehaviour {
     {
         spawningWave = true;
 
-        alienSpeed = 100.0f;
+        // Make the binds faster
+        bindSpawnRate = Mathf.Max(1.0f, 2.0f - currentWave * 0.2f);
+        bindStayTime = 3.0f;
+        bindActivateTime = 1.0f;
+
+        alienSpeed = 100.0f + 20.0f * currentWave;
 
         float x = startX;
         float z = startZ;
@@ -153,13 +158,17 @@ public class GameController : MonoBehaviour {
         yield return new WaitForSeconds(1.0f);
 
         string alienType;
-        if (Random.value < 0.5)
+        float rValue = Random.value;
+        if (rValue < 0.2f)
         {
-            alienType = "GammaZoid";
+            alienType = "GammaBulky";
         }
-        else
+        else if(rValue < 0.6f)
         {
             alienType = "GammaRidged";
+        } else
+        {
+            alienType = "GammaZoid";
         }
 
         GameObject alien = createGamma(new Vector3(x, 0, z), Quaternion.identity, alienType);
