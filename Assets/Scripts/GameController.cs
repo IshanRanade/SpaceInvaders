@@ -82,7 +82,7 @@ public class GameController : MonoBehaviour {
 
         score = 0;
         gameIsOver = false;
-        currentWave = 2;
+        currentWave = 1;
         spawningWave = false;
         resetting = false;
 
@@ -98,7 +98,7 @@ public class GameController : MonoBehaviour {
         aliensReachEnd = false;
 
         lastResourceTime = 0;
-        resourceSpawnPeriod = 15.0f;
+        resourceSpawnPeriod = 10.0f;
 
         columns = new List<List<GameObject>>();
 
@@ -132,13 +132,17 @@ public class GameController : MonoBehaviour {
         float x = startX;
         float z = startZ;
 
-        distanceX = 40 - 4 * Mathf.Min(8, currentWave + 4);
+        float cols = Mathf.Min(6, currentWave + 3);
+        float rows = Mathf.Min(6, currentWave + 2);
 
-        for (int i = 0; i < Mathf.Min(8, currentWave + 5); i++)
+
+        distanceX = 40 - 4 * (cols - 1);
+
+        for (int i = 0; i < cols; i++)
         {
             columns.Add(new List<GameObject>());
 
-            for(int j = 0; j < Mathf.Min(8, currentWave + 2); j ++)
+            for(int j = 0; j < rows; j ++)
             {
                 // Make an effect to show them spawning
                 GameObject newEffect = Instantiate(resourceEffect, new Vector3(x, 0, z), Quaternion.identity);
@@ -200,7 +204,10 @@ public class GameController : MonoBehaviour {
             ResetGame();
         }
 
-        if(gameIsOver)
+        scoreText.GetComponent<Text>().text = "Score: " + score;
+        playerHealthText.GetComponent<Text>().text = "Health: " + player.GetComponent<PlayerController>().health;
+
+        if (gameIsOver)
         {
             gameOverText.SetActive(true);
         }
@@ -209,9 +216,6 @@ public class GameController : MonoBehaviour {
         {
             return;
         }
-
-        scoreText.GetComponent<Text>().text = "Score: " + score;
-        playerHealthText.GetComponent<Text>().text = "Health: " + player.GetComponent<PlayerController>().health;
 
         if (currentNumAliens == 0 && !spawningWave)
         {

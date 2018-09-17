@@ -11,14 +11,22 @@ public class ResourceGammaController : MonoBehaviour {
     GameController gameController;
     float scorePoints;
 
+    private AudioSource resourceSound;
+    private AudioSource powerupSound;
+
 	// Use this for initialization
 	void Start () {
         target = new Vector3(-transform.position.x, 0, transform.position.z);
         resourceEffect = Resources.Load<GameObject>("Prefab/ResourceEffect");
         plasmaExplosion = Resources.Load<GameObject>("Prefab/PlasmaExplosionEffect");
         gameController = GameObject.Find("GameController").GetComponent<GameController>();
-        speed = 7.0f;
+        speed = 9.0f;
         scorePoints = 10.0f;
+
+        resourceSound = GameObject.Find("ResourceSound").GetComponent<AudioSource>();
+        powerupSound = GameObject.Find("PowerupSound").GetComponent<AudioSource>();
+
+        resourceSound.Play();
 
         DoEffect();
     }
@@ -48,6 +56,7 @@ public class ResourceGammaController : MonoBehaviour {
         GameObject newExplosion = Instantiate(plasmaExplosion, gameObject.transform.position, Quaternion.identity);
         float time = newExplosion.GetComponent<ParticleSystem>().main.duration;
         gameController.UpdateScore(scorePoints);
+        powerupSound.Play();
         Destroy(newExplosion, time);
         Destroy(gameObject);
     }

@@ -35,6 +35,8 @@ TagManager:
   - GameOverText
   - Bind
   - BindSound
+  - ResourceSound
+  - PowerupSound
   layers:
   - Default
   - TransparentFX
