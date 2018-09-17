@@ -25,7 +25,7 @@ public class GameController : MonoBehaviour {
     public int currentNumAliens;
     public int currentWave;
 
-    private float score;
+    public float score;
     public bool gameIsOver;
     public bool resetting;
     bool spawningWave;
@@ -55,6 +55,7 @@ public class GameController : MonoBehaviour {
     public float bindCreatedTime;
     public float bindActivateTime;
     public Vector3 bindCurrentLocation;
+    public float bindsCurrentScore;
 
     // Use this for initialization
     void Start()
@@ -110,6 +111,7 @@ public class GameController : MonoBehaviour {
         bindActivateTime = 1.0f;
         bindCreatedTime = Time.time;
         bindCurrentLocation = new Vector3(-100, -100, -100);
+        bindsCurrentScore = 0.0f;
     }
 
     void SpawnWave()
@@ -275,6 +277,7 @@ public class GameController : MonoBehaviour {
         gameOverText.SetActive(false);
         bindCreatedTime = Time.time;
         bindCurrentLocation = new Vector3(-100, -100, -100);
+        bindsCurrentScore = 0.0f;
     }
 
     private void HideWaveText()

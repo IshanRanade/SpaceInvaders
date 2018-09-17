@@ -17,9 +17,21 @@ public class BindController : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+        Renderer rend = GetComponent<Renderer>();
+        if (Time.time < createdTime + gameController.bindActivateTime)
+        {
+            rend.material.SetFloat("_RimStrength", 1.5f);
+        } else
+        {
+            rend.material.SetFloat("_RimStrength", 6.2f);
+        }
+
+
 		if(Time.time > createdTime + stayTime)
         {
             gameController.bindCurrentLocation = new Vector3(-100, -100, -100);
+            gameController.bindsCurrentScore++;
+            gameController.score += gameController.bindsCurrentScore;
             Destroy(gameObject);
         }
 	}

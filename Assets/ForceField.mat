@@ -30,6 +30,6 @@ Material:
     - _DistortStrength: 0.5
     - _DistortTimeFactor: 0.45
     - _IntersectPower: 1.88
-    - _RimStrength: 9.3
+    - _RimStrength: 6.2
     m_Colors:
     - _Color: {r: 0.06854963, g: 0, b: 1, a: 1}

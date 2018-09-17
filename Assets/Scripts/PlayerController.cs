@@ -140,6 +140,7 @@ public class PlayerController : MonoBehaviour {
             Time.time > gameController.bindCreatedTime + gameController.bindActivateTime)
         {
             rigidbody.velocity = new Vector3(0, 0, 0);
+            gameController.bindsCurrentScore = -1;
         }
     }
 

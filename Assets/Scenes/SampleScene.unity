@@ -1628,6 +1628,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentNumAliens: 0
   currentWave: 0
+  score: 0
   gameIsOver: 0
   resetting: 0
   minX: 0
@@ -1646,7 +1647,9 @@ MonoBehaviour:
   bindSpawnRate: 0
   bindStayTime: 0
   bindCreatedTime: 0
+  bindActivateTime: 0
   bindCurrentLocation: {x: 0, y: 0, z: 0}
+  bindsCurrentScore: 0
 --- !u!1 &1855415385
 GameObject:
   m_ObjectHideFlags: 0
@@ -1903,48 +1906,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 34.838, y: -30.000002, z: 0}
---- !u!1001 &2036012535
-Prefab:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 4453478548834880, guid: 8fe3cc9aacbabd64d9915aef03025252, type: 2}
-      propertyPath: m_LocalPosition.x
-      value: 0.43
-      objectReference: {fileID: 0}
-    - target: {fileID: 4453478548834880, guid: 8fe3cc9aacbabd64d9915aef03025252, type: 2}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4453478548834880, guid: 8fe3cc9aacbabd64d9915aef03025252, type: 2}
-      propertyPath: m_LocalPosition.z
-      value: -1.05
-      objectReference: {fileID: 0}
-    - target: {fileID: 4453478548834880, guid: 8fe3cc9aacbabd64d9915aef03025252, type: 2}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4453478548834880, guid: 8fe3cc9aacbabd64d9915aef03025252, type: 2}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4453478548834880, guid: 8fe3cc9aacbabd64d9915aef03025252, type: 2}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4453478548834880, guid: 8fe3cc9aacbabd64d9915aef03025252, type: 2}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4453478548834880, guid: 8fe3cc9aacbabd64d9915aef03025252, type: 2}
-      propertyPath: m_RootOrder
-      value: 18
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 8fe3cc9aacbabd64d9915aef03025252, type: 2}
-  m_IsPrefabAsset: 0
 --- !u!1 &2065924119
 GameObject:
   m_ObjectHideFlags: 0
