@@ -57,6 +57,8 @@ public class GameController : MonoBehaviour {
     public Vector3 bindCurrentLocation;
     public float bindsCurrentScore;
 
+    private bool aliensReachEnd;
+
     // Use this for initialization
     void Start()
     {
@@ -80,7 +82,7 @@ public class GameController : MonoBehaviour {
 
         score = 0;
         gameIsOver = false;
-        currentWave = 1;
+        currentWave = 2;
         spawningWave = false;
         resetting = false;
 
@@ -92,6 +94,8 @@ public class GameController : MonoBehaviour {
 
         distanceX = 40;
         distanceZ = 2;
+
+        aliensReachEnd = false;
 
         lastResourceTime = 0;
         resourceSpawnPeriod = 15.0f;
@@ -123,11 +127,14 @@ public class GameController : MonoBehaviour {
         bindStayTime = 3.0f;
         bindActivateTime = 1.0f;
 
-        alienSpeed = 100.0f + 20.0f * currentWave;
+        alienSpeed = 150.0f + 20.0f * currentWave;
 
         float x = startX;
         float z = startZ;
-        for (int i = 0; i < Mathf.Min(8, currentWave + 4); i++)
+
+        distanceX = 40 - 4 * Mathf.Min(8, currentWave + 4);
+
+        for (int i = 0; i < Mathf.Min(8, currentWave + 5); i++)
         {
             columns.Add(new List<GameObject>());
 
@@ -287,6 +294,7 @@ public class GameController : MonoBehaviour {
         bindCreatedTime = Time.time;
         bindCurrentLocation = new Vector3(-100, -100, -100);
         bindsCurrentScore = 0.0f;
+        aliensReachEnd = false;
     }
 
     private void HideWaveText()
@@ -356,6 +364,17 @@ public class GameController : MonoBehaviour {
             Vector3 position = new Vector3(Random.value * 32 + -16, 0, -1.05f);
             Instantiate(bind, position, Quaternion.identity);
             bindCurrentLocation = position;
+        }
+    }
+
+    public void AliensReachedEnd()
+    {
+        if (!aliensReachEnd)
+        {
+            aliensReachEnd = true;
+            player.GetComponent<PlayerController>().health = 0;
+            player.GetComponent<PlayerController>().BlowUp();
+            gameIsOver = true;
         }
     }
 

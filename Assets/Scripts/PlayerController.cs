@@ -56,6 +56,18 @@ public class PlayerController : MonoBehaviour {
         GetComponent<Rigidbody>().angularVelocity = new Vector3(0, 0, 0);
     }
 
+    public void BlowUp()
+    {
+        GameObject newExplosion = Instantiate(bigExplosionEffect, gameObject.transform.position, Quaternion.identity);
+        float time = newExplosion.GetComponent<ParticleSystem>().main.duration;
+        Destroy(newExplosion, time);
+
+        playerExplosionSound.GetComponent<AudioSource>().Play();
+
+        gameObject.GetComponent<Renderer>().enabled = false;
+        isDead = true;
+    }
+
     void FixedUpdate()
     {
         if(isDead)
@@ -65,14 +77,7 @@ public class PlayerController : MonoBehaviour {
 
         if(health <= 0)
         {
-            GameObject newExplosion = Instantiate(bigExplosionEffect, gameObject.transform.position, Quaternion.identity);
-            float time = newExplosion.GetComponent<ParticleSystem>().main.duration;
-            Destroy(newExplosion, time);
-
-            playerExplosionSound.GetComponent<AudioSource>().Play();
-
-            gameObject.GetComponent<Renderer>().enabled = false;
-            isDead = true;
+            BlowUp();
             return;
         }
 

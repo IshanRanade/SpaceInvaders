@@ -95,7 +95,7 @@ public class GammaController : MonoBehaviour
 
         if(transform.position.z <= 0)
         {
-            gameController.gameIsOver = true;
+            gameController.AliensReachedEnd();
         }
     }
 
