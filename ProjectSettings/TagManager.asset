@@ -37,6 +37,7 @@ TagManager:
   - BindSound
   - ResourceSound
   - PowerupSound
+  - StartText
   layers:
   - Default
   - TransparentFX

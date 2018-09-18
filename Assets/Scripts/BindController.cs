@@ -37,7 +37,7 @@ public class BindController : MonoBehaviour {
         }
 
 
-		if(Time.time > createdTime + stayTime)
+		if(Time.time > createdTime + stayTime + gameController.bindActivateTime)
         {
             gameController.bindCurrentLocation = new Vector3(-100, -100, -100);
             gameController.bindsCurrentScore++;

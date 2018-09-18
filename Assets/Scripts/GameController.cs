@@ -110,7 +110,7 @@ public class GameController : MonoBehaviour {
 
         bind = Resources.Load<GameObject>("Prefab/Bind");
         bindRadius = bind.transform.localScale.x / 2.0f;
-        bindSpawnRate = 1.5f;
+        bindSpawnRate = 0.1f;
         bindStayTime = 3.0f;
         bindActivateTime = 1.0f;
         bindCreatedTime = Time.time;
@@ -362,7 +362,7 @@ public class GameController : MonoBehaviour {
 
     public void SpawnBind()
     {
-        if (Time.time > bindSpawnRate + bindStayTime + bindCreatedTime)
+        if (Time.time > bindSpawnRate + bindStayTime + bindCreatedTime + bindActivateTime)
         {
             bindCreatedTime = Time.time;
             Vector3 position = new Vector3(Random.value * 32 + -16, 0, -1.05f);
